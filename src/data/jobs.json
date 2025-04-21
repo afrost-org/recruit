@@ -1,0 +1,169 @@
+{
+  "jobs": [
+    {
+      "id": "fe-developer",
+      "title": "Frontend Developer",
+      "department": "Engineering",
+      "location": "Remote",
+      "type": "Full-time",
+      "postedDate": "2025-01-15",
+      "shortDescription": "Join our team to build beautiful, responsive user interfaces using React and modern frontend technologies.",
+      "description": "We're looking for a talented Frontend Developer to help us create exceptional user experiences. You'll work with a team of designers and developers to build and maintain responsive web applications using React and modern frontend technologies.",
+      "responsibilities": [
+        "Develop new user-facing features using React.js",
+        "Build reusable components and libraries for future use",
+        "Translate designs and wireframes into high-quality code",
+        "Optimize components for maximum performance across devices",
+        "Collaborate with designers, product managers, and other developers"
+      ],
+      "requirements": [
+        "3+ years of experience with React.js",
+        "Strong proficiency in JavaScript, HTML, and CSS",
+        "Experience with responsive design and cross-browser compatibility",
+        "Familiarity with RESTful APIs and modern frontend build pipelines",
+        "Knowledge of state management techniques"
+      ],
+      "preferred": [
+        "Experience with TypeScript",
+        "Knowledge of testing libraries like Jest or React Testing Library",
+        "Experience with frontend frameworks like Next.js",
+        "Familiarity with CI/CD workflows",
+        "Open source contributions"
+      ],
+      "salary": "$90,000 - $120,000",
+      "applicationEmail": "careers@company.com"
+    },
+    {
+      "id": "ux-designer",
+      "title": "UX Designer",
+      "department": "Design",
+      "location": "San Francisco, CA",
+      "type": "Full-time",
+      "postedDate": "2025-01-20",
+      "shortDescription": "Help us create intuitive and beautiful user experiences that delight our customers.",
+      "description": "We're seeking a creative UX Designer to join our product team. You'll work closely with product managers, developers, and other designers to create intuitive and engaging user experiences across our digital products.",
+      "responsibilities": [
+        "Create user flows, wireframes, prototypes, and high-fidelity mockups",
+        "Conduct user research and usability testing",
+        "Analyze user behavior and incorporate feedback into design decisions",
+        "Collaborate with developers to ensure designs are implemented correctly",
+        "Help establish and maintain design systems and guidelines"
+      ],
+      "requirements": [
+        "3+ years of experience in UX/UI design",
+        "Proficiency with design tools such as Figma or Sketch",
+        "Strong understanding of user-centered design principles",
+        "Experience with user research and usability testing",
+        "Excellent communication and presentation skills"
+      ],
+      "preferred": [
+        "Experience with design systems",
+        "Knowledge of HTML/CSS",
+        "Background in product design or interaction design",
+        "Experience with animation and motion design",
+        "Portfolio demonstrating strong UX problem-solving"
+      ],
+      "salary": "$95,000 - $125,000",
+      "applicationEmail": "design@company.com"
+    },
+    {
+      "id": "backend-engineer",
+      "title": "Backend Engineer",
+      "department": "Engineering",
+      "location": "Remote",
+      "type": "Full-time",
+      "postedDate": "2025-01-25",
+      "shortDescription": "Build and maintain the server-side logic that powers our applications.",
+      "description": "We are looking for a Backend Engineer to join our engineering team. You'll be responsible for developing and maintaining the server-side logic, defining and maintaining database schemas, and ensuring high performance and responsiveness to requests from the front-end.",
+      "responsibilities": [
+        "Design and implement server-side logic and APIs",
+        "Build efficient, testable, and reusable code",
+        "Integrate data storage solutions",
+        "Implement security and data protection measures",
+        "Collaborate with frontend developers on feature implementation"
+      ],
+      "requirements": [
+        "3+ years of experience in backend development",
+        "Proficiency in Node.js, Python, or Java",
+        "Experience with databases (SQL, NoSQL)",
+        "Understanding of server-side templating languages",
+        "Basic understanding of frontend technologies"
+      ],
+      "preferred": [
+        "Experience with microservices architecture",
+        "Knowledge of cloud services (AWS, GCP, or Azure)",
+        "Familiarity with Docker and Kubernetes",
+        "Experience with CI/CD pipelines",
+        "Knowledge of security best practices"
+      ],
+      "salary": "$100,000 - $130,000",
+      "applicationEmail": "engineering@company.com"
+    },
+    {
+      "id": "product-manager",
+      "title": "Product Manager",
+      "department": "Product",
+      "location": "New York, NY",
+      "type": "Full-time",
+      "postedDate": "2025-02-01",
+      "shortDescription": "Drive product vision, strategy, and execution to deliver exceptional user experiences.",
+      "description": "We're looking for a Product Manager to help define and execute our product strategy. You'll work with cross-functional teams to identify opportunities, define requirements, and deliver features that meet user needs and business objectives.",
+      "responsibilities": [
+        "Define product vision, strategy, and roadmap",
+        "Gather and prioritize product requirements",
+        "Work closely with engineering, design, and marketing teams",
+        "Define success metrics and monitor product performance",
+        "Conduct market research and competitive analysis"
+      ],
+      "requirements": [
+        "3+ years of experience in product management",
+        "Strong analytical and problem-solving skills",
+        "Excellent communication and stakeholder management abilities",
+        "Experience with agile development methodologies",
+        "Data-driven decision making skills"
+      ],
+      "preferred": [
+        "Technical background or experience working with technical teams",
+        "Experience with product analytics tools",
+        "MBA or relevant advanced degree",
+        "Experience in the same industry",
+        "Track record of successful product launches"
+      ],
+      "salary": "$110,000 - $140,000",
+      "applicationEmail": "product@company.com"
+    },
+    {
+      "id": "marketing-specialist",
+      "title": "Marketing Specialist",
+      "department": "Marketing",
+      "location": "Remote",
+      "type": "Full-time",
+      "postedDate": "2025-02-05",
+      "shortDescription": "Create and execute marketing campaigns to drive brand awareness and user acquisition.",
+      "description": "We're seeking a Marketing Specialist to help grow our user base and build our brand. You'll create and execute marketing campaigns across various channels to drive user acquisition, engagement, and retention.",
+      "responsibilities": [
+        "Plan and execute marketing campaigns across digital channels",
+        "Create compelling content for our website, blog, and social media",
+        "Analyze campaign performance and optimize for results",
+        "Collaborate with product and design teams on marketing initiatives",
+        "Stay up-to-date with marketing trends and best practices"
+      ],
+      "requirements": [
+        "2+ years of experience in digital marketing",
+        "Experience with social media marketing and content creation",
+        "Knowledge of SEO and SEM principles",
+        "Familiarity with marketing analytics tools",
+        "Strong written and verbal communication skills"
+      ],
+      "preferred": [
+        "Experience with email marketing",
+        "Knowledge of graphic design principles",
+        "Experience with marketing automation tools",
+        "Background in the same industry",
+        "Experience with A/B testing and optimization"
+      ],
+      "salary": "$70,000 - $90,000",
+      "applicationEmail": "marketing@company.com"
+    }
+  ]
+}
