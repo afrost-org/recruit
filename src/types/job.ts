@@ -1,7 +1,7 @@
 export interface ApplicationQuestion {
   id: string;
   question: string;
-  type: 'text' | 'url' | 'email';
+  type: string;
 }
 
 export interface Job {
