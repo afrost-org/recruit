@@ -3,6 +3,7 @@ import JobCard from "./JobCard";
 import { Job } from "@/types/job";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 
 interface JobListProps {
   jobs: Job[];
@@ -54,11 +55,17 @@ const JobList = ({ jobs }: JobListProps) => {
           ))}
         </TabsList>
         <TabsContent value={departmentFilter} className="mt-6">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredJobs.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
-          </div>
+          {filteredJobs.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredJobs.map((job) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </div>
+          ) : (
+            <Card className="p-6 text-center">
+              <p className="text-muted-foreground">No jobs found in this department.</p>
+            </Card>
+          )}
         </TabsContent>
       </Tabs>
     </div>

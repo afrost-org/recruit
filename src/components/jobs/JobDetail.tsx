@@ -2,6 +2,13 @@ import { ArrowLeft, Building2, CalendarDays, Clock, MapPin, Copy, Check } from "
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Job } from "@/types/job";
 import { useState } from "react";
 
@@ -71,22 +78,61 @@ const JobDetail = ({ job }: JobDetailProps) => {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{job.title}</h1>
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Building2 className="h-4 w-4" />
-            <span>{job.department}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
-            <span>{job.location}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            <span>{job.type}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CalendarDays className="h-4 w-4" />
-            <span>Posted on {formatDate(job.postedDate)}</span>
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-4 w-4" />
+                  <span>{job.department}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Department</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <span>{job.location}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Location</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{job.type}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Employment Type</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4" />
+                  <span>Posted on {formatDate(job.postedDate)}</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Posted Date</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 
@@ -154,7 +200,9 @@ const JobDetail = ({ job }: JobDetailProps) => {
               {job.salary && (
                 <div>
                   <h3 className="text-sm font-medium">Salary Range</h3>
-                  <p className="text-muted-foreground">{job.salary}</p>
+                  <Badge variant="secondary" className="mt-1">
+                    {job.salary}
+                  </Badge>
                 </div>
               )}
 
@@ -164,26 +212,21 @@ const JobDetail = ({ job }: JobDetailProps) => {
                   <h3 className="text-sm font-medium">Application Questions</h3>
                   {job.applicationQuestions.map((question) => (
                     <div key={question.id} className="space-y-2">
-                      <label 
-                        htmlFor={question.id}
-                        className="text-sm text-muted-foreground"
-                      >
+                      <Label htmlFor={question.id}>
                         {question.question}
-                      </label>
+                      </Label>
                       {question.type === 'text' ? (
-                        <textarea
+                        <Textarea
                           id={question.id}
                           rows={3}
-                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                           value={answers[question.id] || ''}
                           onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                           placeholder="Your answer..."
                         />
                       ) : (
-                        <input
+                        <Input
                           id={question.id}
                           type={question.type}
-                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                           value={answers[question.id] || ''}
                           onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                           placeholder={`Enter ${question.type === 'url' ? 'URL' : 'email address'}...`}
@@ -198,31 +241,33 @@ const JobDetail = ({ job }: JobDetailProps) => {
                 <div className="rounded-lg border p-4 space-y-2">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium">Application Email</h3>
-                    <button
+                    <Button
                       onClick={handleCopy}
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:text-primary/80"
+                      variant="secondary"
+                      size="sm"
+                      className="text-xs"
                     >
                       {copied ? (
                         <>
-                          <Check className="h-4 w-4" />
-                          Copied!
+                          <Check className="h-4 w-4 mr-1" />
+                          <span>Copied!</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="h-4 w-4" />
-                          Copy Details
+                          <Copy className="h-4 w-4 mr-1" />
+                          <span>Copy Details</span>
                         </>
                       )}
-                    </button>
+                    </Button>
                   </div>
                   <p className="text-sm text-muted-foreground break-all">{job.applicationEmail}</p>
                 </div>
-                <button
+                <Button
                   onClick={handleApply}
-                  className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="w-full"
                 >
                   Apply Now
-                </button>
+                </Button>
               </div>
               <p className="text-center text-xs text-muted-foreground">
                 Click Apply Now to open your email client, or copy the details to apply manually

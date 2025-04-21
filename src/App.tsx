@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@/components/ui/card";
 
 // Lazy load pages
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -16,10 +17,9 @@ const PageSkeleton = () => (
     </div>
     <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: 6 }).map((_, index) => (
-        <div
-          key={index}
-          className="h-64 rounded-lg bg-muted p-6 animate-pulse"
-        />
+        <Card key={index} className="h-64 p-6">
+          <Skeleton className="h-full w-full" />
+        </Card>
       ))}
     </div>
   </div>

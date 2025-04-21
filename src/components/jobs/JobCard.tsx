@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Job } from "@/types/job";
 
 interface JobCardProps {
@@ -28,7 +29,7 @@ const JobCard = ({ job }: JobCardProps) => {
         </div>
         <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
           <span>{job.location}</span>
-          <span>·</span>
+          <Separator orientation="vertical" className="h-4" />
           <span>{job.department}</span>
         </div>
       </CardHeader>
@@ -40,10 +41,10 @@ const JobCard = ({ job }: JobCardProps) => {
       <CardFooter className="flex items-center justify-between border-t p-6">
         <span className="text-xs text-muted-foreground">Posted {timeAgo}</span>
         <Button
-          className="bg-primary text-white hover:bg-primary/90 flex items-center gap-2"
+          variant="default"
           onClick={handleApply}
         >
-          Apply Now <ArrowRight className="h-4 w-4" />
+          Apply Now <ArrowRight className="h-4 w-4 ml-2" />
         </Button>
       </CardFooter>
     </Card>

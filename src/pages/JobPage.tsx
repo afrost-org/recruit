@@ -4,6 +4,7 @@ import JobDetail from "@/components/jobs/JobDetail";
 import jobsData from "@/data/jobs.json";
 import { Job } from "@/types/job";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const JobPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -45,7 +46,7 @@ const JobPage = () => {
 const JobDetailSkeleton = () => {
   return (
     <div className="space-y-8">
-      <div className="h-4 w-24 rounded-full bg-muted" />
+      <Skeleton className="h-4 w-24" />
       <div className="space-y-4">
         <Skeleton className="h-10 w-64" />
         <div className="flex flex-wrap gap-4">
@@ -58,30 +59,30 @@ const JobDetailSkeleton = () => {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className="rounded-lg border">
-              <div className="border-b p-6">
+            <Card key={index}>
+              <CardHeader>
                 <Skeleton className="h-6 w-32" />
-              </div>
-              <div className="p-6 space-y-4">
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-3/4" />
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
         <div>
-          <div className="rounded-lg border">
-            <div className="border-b p-6">
+          <Card>
+            <CardHeader>
               <Skeleton className="h-6 w-32" />
-            </div>
-            <div className="p-6 space-y-4">
+            </CardHeader>
+            <CardContent className="space-y-4">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-10 w-full" />
               <Skeleton className="h-4 w-3/4 mx-auto" />
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
