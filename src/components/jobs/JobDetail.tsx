@@ -41,6 +41,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
       });
     }
 
+    body += "Please find my resume attached to this email.\n\n";
     body += "Thank you for considering my application.\n\nBest regards,\n[Your Name]";
     return body;
   };
