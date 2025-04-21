@@ -23,12 +23,12 @@ const HomePage = () => {
   return (
     <div className="mx-auto max-w-7xl py-8 md:py-12">
       <Card className="mx-auto max-w-3xl space-y-4 border-0 bg-transparent p-0 text-center shadow-none">
-        <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-          Join Afrost
+        <h1 className="font-serif text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+          Find Your Next Opportunity
         </h1>
         <p className="text-lg text-muted-foreground">
-          Be part of our mission to revolutionize technology. Explore our open positions
-          and find your next opportunity with us.
+          Discover exciting career opportunities at innovative companies hiring through Afrost. 
+          Browse our curated job listings and take the next step in your professional journey.
         </p>
       </Card>
 

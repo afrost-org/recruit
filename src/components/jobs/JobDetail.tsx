@@ -76,7 +76,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
 
       {/* Job header */}
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{job.title}</h1>
+        <h1 className="font-serif text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{job.title}</h1>
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
           <TooltipProvider>
             <Tooltip>
@@ -209,10 +209,10 @@ const JobDetail = ({ job }: JobDetailProps) => {
               {/* Application Questions */}
               {job.applicationQuestions && (
                 <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Application Questions</h3>
+                  <h3 className="font-serif text-sm font-medium">Application Questions</h3>
                   {job.applicationQuestions.map((question) => (
                     <div key={question.id} className="space-y-2">
-                      <Label htmlFor={question.id}>
+                      <Label htmlFor={question.id} className="font-medium">
                         {question.question}
                       </Label>
                       {question.type === 'text' ? (
@@ -222,6 +222,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
                           value={answers[question.id] || ''}
                           onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                           placeholder="Your answer..."
+                          className="border-muted-foreground/20"
                         />
                       ) : (
                         <Input
@@ -230,6 +231,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
                           value={answers[question.id] || ''}
                           onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                           placeholder={`Enter ${question.type === 'url' ? 'URL' : 'email address'}...`}
+                          className="border-muted-foreground/20"
                         />
                       )}
                     </div>
@@ -240,7 +242,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
               <div className="space-y-4">
                 <div className="rounded-lg border p-4 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium">Application Email</h3>
+                    <h3 className="font-serif text-sm font-medium">Application Email</h3>
                     <Button
                       onClick={handleCopy}
                       variant="secondary"

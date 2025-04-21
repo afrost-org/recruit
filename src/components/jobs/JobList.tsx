@@ -63,7 +63,7 @@ const JobList = ({ jobs }: JobListProps) => {
             </div>
           ) : (
             <Card className="p-6 text-center">
-              <p className="text-muted-foreground">No jobs found in this department.</p>
+              <p className="font-serif text-muted-foreground">No jobs found in this department.</p>
             </Card>
           )}
         </TabsContent>

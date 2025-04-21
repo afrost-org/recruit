@@ -24,7 +24,7 @@ const JobCard = ({ job }: JobCardProps) => {
     <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-md">
       <CardHeader className="flex-none p-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="text-xl font-semibold tracking-tight">{job.title}</h3>
+          <h3 className="font-serif text-xl font-semibold tracking-tight">{job.title}</h3>
           <Badge variant="outline">{job.type}</Badge>
         </div>
         <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">

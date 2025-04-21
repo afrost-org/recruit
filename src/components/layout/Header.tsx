@@ -1,4 +1,3 @@
-import { Snowflake } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -7,8 +6,8 @@ const Header = () => {
       <div className="mx-auto max-w-[1200px] px-4 md:px-6">
         <div className="flex h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
-            <Snowflake className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold tracking-tight">Afrost</span>
+            <img src="/favicon.svg" alt="Afrost Logo" className="h-6 w-6" />
+            <span className="font-serif text-xl font-bold tracking-tight">Afrost</span>
           </Link>
         </div>
       </div>
