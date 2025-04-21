@@ -1,3 +1,9 @@
+export interface ApplicationQuestion {
+  id: string;
+  question: string;
+  type: 'text' | 'url' | 'email';
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -12,4 +18,5 @@ export interface Job {
   preferred?: string[];
   salary?: string;
   applicationEmail: string;
+  applicationQuestions?: ApplicationQuestion[];
 }

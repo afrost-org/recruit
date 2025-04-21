@@ -1,9 +1,11 @@
 import { lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Lazy load homepage
+// Lazy load pages
 const HomePage = lazy(() => import("@/pages/HomePage"));
+const JobPage = lazy(() => import("@/pages/JobPage"));
 
 // Fallback loading component
 const PageSkeleton = () => (
@@ -27,7 +29,10 @@ function App() {
   return (
     <Layout>
       <Suspense fallback={<PageSkeleton />}>
-        <HomePage />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/jobs/:jobId" element={<JobPage />} />
+        </Routes>
       </Suspense>
     </Layout>
   );

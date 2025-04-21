@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,11 +11,12 @@ interface JobCardProps {
 }
 
 const JobCard = ({ job }: JobCardProps) => {
+  const navigate = useNavigate();
   const postedDate = new Date(job.postedDate);
   const timeAgo = formatDistanceToNow(postedDate, { addSuffix: true });
 
   const handleApply = () => {
-    window.location.href = `mailto:${job.applicationEmail}?subject=Application for ${job.title} Position&body=Hello,%0D%0A%0D%0AI am interested in applying for the ${job.title} position. Please find my resume attached.%0D%0A%0D%0AThank you,%0D%0A[Your Name]`;
+    navigate(`/jobs/${job.id}`);
   };
 
   return (
@@ -38,8 +40,7 @@ const JobCard = ({ job }: JobCardProps) => {
       <CardFooter className="flex items-center justify-between border-t p-6">
         <span className="text-xs text-muted-foreground">Posted {timeAgo}</span>
         <Button
-          variant="ghost"
-          className="flex items-center gap-1 text-sm font-medium text-primary"
+          className="bg-primary text-white hover:bg-primary/90 flex items-center gap-2"
           onClick={handleApply}
         >
           Apply Now <ArrowRight className="h-4 w-4" />

@@ -30,8 +30,25 @@
         "Familiarity with CI/CD workflows",
         "Open source contributions"
       ],
+      "applicationQuestions": [
+        {
+          "id": "experience",
+          "question": "How many years of experience do you have with React.js and modern frontend development?",
+          "type": "text"
+        },
+        {
+          "id": "project",
+          "question": "Can you describe a challenging frontend project you've worked on and how you solved its main technical challenges?",
+          "type": "text"
+        },
+        {
+          "id": "availability",
+          "question": "When would you be available to start?",
+          "type": "text"
+        }
+      ],
       "salary": "$90,000 - $120,000",
-      "applicationEmail": "careers@company.com"
+      "applicationEmail": "careers@afrost.org"
     },
     {
       "id": "ux-designer",
@@ -63,8 +80,25 @@
         "Experience with animation and motion design",
         "Portfolio demonstrating strong UX problem-solving"
       ],
+      "applicationQuestions": [
+        {
+          "id": "portfolio",
+          "question": "Please provide a link to your portfolio.",
+          "type": "text"
+        },
+        {
+          "id": "process",
+          "question": "Can you walk us through your design process for a recent project?",
+          "type": "text"
+        },
+        {
+          "id": "tools",
+          "question": "What design tools are you most proficient with?",
+          "type": "text"
+        }
+      ],
       "salary": "$95,000 - $125,000",
-      "applicationEmail": "design@company.com"
+      "applicationEmail": "design@afrost.org"
     },
     {
       "id": "backend-engineer",
@@ -97,7 +131,7 @@
         "Knowledge of security best practices"
       ],
       "salary": "$100,000 - $130,000",
-      "applicationEmail": "engineering@company.com"
+      "applicationEmail": "engineering@afrost.org"
     },
     {
       "id": "product-manager",
@@ -130,7 +164,7 @@
         "Track record of successful product launches"
       ],
       "salary": "$110,000 - $140,000",
-      "applicationEmail": "product@company.com"
+      "applicationEmail": "product@afrost.org"
     },
     {
       "id": "marketing-specialist",
@@ -163,7 +197,7 @@
         "Experience with A/B testing and optimization"
       ],
       "salary": "$70,000 - $90,000",
-      "applicationEmail": "marketing@company.com"
+      "applicationEmail": "marketing@afrost.org"
     }
   ]
 }
