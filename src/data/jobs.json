@@ -1,203 +1,83 @@
 {
   "jobs": [
+
     {
-      "id": "fe-developer",
-      "title": "Frontend Developer",
+      "id": "Embedded-engineer",
+      "title": "Embedded Engineer",
+      "department": "Engineering",
+      "location": "Noida",
+      "type": "Permanent Job",
+      "postedDate": "2025-04-25",
+      "shortDescription": "Develop OpenBMC firmware and server manageability features with a focus on ARM and x86 platforms.",
+      "description": "We’re looking for an experienced Embedded Engineer to lead firmware development for our server platforms. You’ll work on OpenBMC solutions, performance monitoring tools, and system manageability features using industry standards like Redfish and PLDM.",
+      "responsibilities": [
+      "Create and deploy OpenBMC firmware with emphasis on Arm architecture.",
+      "Configure BMC firmware, analyze performance, and implement server manageability features.",
+      "Develop diagnostic, error, and configuration modules for components like CPU, GPU, DIMM, SSD, NICs, IB, PSU, BMC, FPGA, and CPLD.",
+      "Design BMC solutions using DMTF standards such as MCTP, Redfish, SPDM, and PLDM.",
+      "Write and automate unit tests for all modules and maintain test coverage reports.",
+      "Generate software quality reports using metrics like CPU load and static analysis.",
+      "Collaborate with hardware teams and review architecture/schematics to influence design."
+      ],
+      "requirements": [
+      "5+ years of experience in electronics engineering or computer science.",
+      "Hands-on experience in firmware development for x86 or ARM platforms.",
+      "Board bring-up and driver-level expertise (SPI, PCIe, SMBus, I2C/I3C).",
+      "Strong understanding of BIOS communication, power management, firmware updates, and device security.",
+      "Experience in system management (IPMI, KCS, PMBus, NVMe) and DMTF standards (PLDM, Redfish, etc.).",
+      "Proficiency in C/C++ for Linux system programming and scripting.",
+      "Solid grasp of Linux build systems, packaging, and upgrade flows."
+      ],
+      "preferred": [
+      "Understanding of REST APIs, JSON over HTTPS, and OAuth authentication.",
+      "Experience influencing hardware design through firmware development.",
+      "Strong code review and unit testing discipline.",
+      "Excellent oral and written communication and collaboration skills.",
+      "Proactive attitude toward high-quality deliverables and deadlines."
+      ],
+          "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+
+    {
+      "id": "automation-tester",
+      "title": "Automation Tester",
       "department": "Engineering",
       "location": "Remote",
       "type": "Full-time",
-      "postedDate": "2025-01-15",
-      "shortDescription": "Join our team to build beautiful, responsive user interfaces using React and modern frontend technologies.",
-      "description": "We're looking for a talented Frontend Developer to help us create exceptional user experiences. You'll work with a team of designers and developers to build and maintain responsive web applications using React and modern frontend technologies.",
+      "postedDate": "2025-04-22",
+      "shortDescription": "Ensure the reliability and performance of our applications through automation testing using Playwright, JMeter, and API tools.",
+      "description": "We are seeking a skilled Automation Tester with expertise in Playwright, JMeter, and API testing to ensure the reliability, performance, and security of our product. The ideal candidate will have experience in automation testing of UI and RESTful APIs, along with a strong understanding of Kubernetes and cloud infrastructure.",
       "responsibilities": [
-        "Develop new user-facing features using React.js",
-        "Build reusable components and libraries for future use",
-        "Translate designs and wireframes into high-quality code",
-        "Optimize components for maximum performance across devices",
-        "Collaborate with designers, product managers, and other developers"
+        "Design, develop, and maintain automated test cases for UI and API testing across functional, integration, regression, and performance scenarios.",
+        "Utilize tools such as Playwright, Selenium, Postman, Rest Assured, and JMeter to create comprehensive automation test suites.",
+        "Validate UI workflows, layouts, and interactions against business and user experience requirements.",
+        "Perform API validations including request/response structures, status codes, error handling, and data integrity.",
+        "Automate test cases using frameworks like JUnit, TestNG, or Playwright, in conjunction with Selenium or REST-assured.",
+        "Identify, document, and track bugs through issue-tracking tools, collaborating with developers to ensure timely resolution.",
+        "Work closely with developers, QA, DevOps, and business analysts to validate application behavior and troubleshoot defects.",
+        "Execute automated tests in containerized environments (e.g., Kubernetes), ensuring stability and scalability.",
+        "Conduct basic performance testing using tools like JMeter to assess API and UI response times under load.",
+        "Stay current with trends in UI and API automation and best practices."
       ],
       "requirements": [
-        "3+ years of experience with React.js",
-        "Strong proficiency in JavaScript, HTML, and CSS",
-        "Experience with responsive design and cross-browser compatibility",
-        "Familiarity with RESTful APIs and modern frontend build pipelines",
-        "Knowledge of state management techniques"
+        "Strong understanding of web application architecture and RESTful APIs.",
+        "Hands-on experience with UI automation tools like Playwright or Selenium.",
+        "Proficient in API testing using Postman, Rest Assured, or SoapUI.",
+        "Solid knowledge of HTML, CSS, JavaScript, JSON, XML, HTTP methods, and status codes.",
+        "Programming experience in Java, Python, or JavaScript for test automation.",
+        "Familiarity with CI/CD tools such as Jenkins, Git, and Docker.",
+        "Experience testing in containerized environments with working knowledge of Kubernetes (K8s).",
+        "Exposure to performance testing tools like JMeter or Locust, with ability to analyze metrics.",
+        "Understanding of cloud-native platforms and modern application infrastructures."
       ],
       "preferred": [
-        "Experience with TypeScript",
-        "Knowledge of testing libraries like Jest or React Testing Library",
-        "Experience with frontend frameworks like Next.js",
-        "Familiarity with CI/CD workflows",
-        "Open source contributions"
+        "Exposure to cloud environments like AWS, Azure, or GCP.",
+        "Experience with OpenShift and advanced Kubernetes setups."
       ],
-      "applicationQuestions": [
-        {
-          "id": "experience",
-          "question": "How many years of experience do you have with React.js and modern frontend development?",
-          "type": "text"
-        },
-        {
-          "id": "project",
-          "question": "Can you describe a challenging frontend project you've worked on and how you solved its main technical challenges?",
-          "type": "text"
-        },
-        {
-          "id": "availability",
-          "question": "When would you be available to start?",
-          "type": "text"
-        }
-      ],
-      "salary": "$90,000 - $120,000",
-      "applicationEmail": "careers@afrost.org"
-    },
-    {
-      "id": "ux-designer",
-      "title": "UX Designer",
-      "department": "Design",
-      "location": "San Francisco, CA",
-      "type": "Full-time",
-      "postedDate": "2025-01-20",
-      "shortDescription": "Help us create intuitive and beautiful user experiences that delight our customers.",
-      "description": "We're seeking a creative UX Designer to join our product team. You'll work closely with product managers, developers, and other designers to create intuitive and engaging user experiences across our digital products.",
-      "responsibilities": [
-        "Create user flows, wireframes, prototypes, and high-fidelity mockups",
-        "Conduct user research and usability testing",
-        "Analyze user behavior and incorporate feedback into design decisions",
-        "Collaborate with developers to ensure designs are implemented correctly",
-        "Help establish and maintain design systems and guidelines"
-      ],
-      "requirements": [
-        "3+ years of experience in UX/UI design",
-        "Proficiency with design tools such as Figma or Sketch",
-        "Strong understanding of user-centered design principles",
-        "Experience with user research and usability testing",
-        "Excellent communication and presentation skills"
-      ],
-      "preferred": [
-        "Experience with design systems",
-        "Knowledge of HTML/CSS",
-        "Background in product design or interaction design",
-        "Experience with animation and motion design",
-        "Portfolio demonstrating strong UX problem-solving"
-      ],
-      "applicationQuestions": [
-        {
-          "id": "portfolio",
-          "question": "Please provide a link to your portfolio.",
-          "type": "text"
-        },
-        {
-          "id": "process",
-          "question": "Can you walk us through your design process for a recent project?",
-          "type": "text"
-        },
-        {
-          "id": "tools",
-          "question": "What design tools are you most proficient with?",
-          "type": "text"
-        }
-      ],
-      "salary": "$95,000 - $125,000",
-      "applicationEmail": "design@afrost.org"
-    },
-    {
-      "id": "backend-engineer",
-      "title": "Backend Engineer",
-      "department": "Engineering",
-      "location": "Remote",
-      "type": "Full-time",
-      "postedDate": "2025-01-25",
-      "shortDescription": "Build and maintain the server-side logic that powers our applications.",
-      "description": "We are looking for a Backend Engineer to join our engineering team. You'll be responsible for developing and maintaining the server-side logic, defining and maintaining database schemas, and ensuring high performance and responsiveness to requests from the front-end.",
-      "responsibilities": [
-        "Design and implement server-side logic and APIs",
-        "Build efficient, testable, and reusable code",
-        "Integrate data storage solutions",
-        "Implement security and data protection measures",
-        "Collaborate with frontend developers on feature implementation"
-      ],
-      "requirements": [
-        "3+ years of experience in backend development",
-        "Proficiency in Node.js, Python, or Java",
-        "Experience with databases (SQL, NoSQL)",
-        "Understanding of server-side templating languages",
-        "Basic understanding of frontend technologies"
-      ],
-      "preferred": [
-        "Experience with microservices architecture",
-        "Knowledge of cloud services (AWS, GCP, or Azure)",
-        "Familiarity with Docker and Kubernetes",
-        "Experience with CI/CD pipelines",
-        "Knowledge of security best practices"
-      ],
-      "salary": "$100,000 - $130,000",
-      "applicationEmail": "engineering@afrost.org"
-    },
-    {
-      "id": "product-manager",
-      "title": "Product Manager",
-      "department": "Product",
-      "location": "New York, NY",
-      "type": "Full-time",
-      "postedDate": "2025-02-01",
-      "shortDescription": "Drive product vision, strategy, and execution to deliver exceptional user experiences.",
-      "description": "We're looking for a Product Manager to help define and execute our product strategy. You'll work with cross-functional teams to identify opportunities, define requirements, and deliver features that meet user needs and business objectives.",
-      "responsibilities": [
-        "Define product vision, strategy, and roadmap",
-        "Gather and prioritize product requirements",
-        "Work closely with engineering, design, and marketing teams",
-        "Define success metrics and monitor product performance",
-        "Conduct market research and competitive analysis"
-      ],
-      "requirements": [
-        "3+ years of experience in product management",
-        "Strong analytical and problem-solving skills",
-        "Excellent communication and stakeholder management abilities",
-        "Experience with agile development methodologies",
-        "Data-driven decision making skills"
-      ],
-      "preferred": [
-        "Technical background or experience working with technical teams",
-        "Experience with product analytics tools",
-        "MBA or relevant advanced degree",
-        "Experience in the same industry",
-        "Track record of successful product launches"
-      ],
-      "salary": "$110,000 - $140,000",
-      "applicationEmail": "product@afrost.org"
-    },
-    {
-      "id": "marketing-specialist",
-      "title": "Marketing Specialist",
-      "department": "Marketing",
-      "location": "Remote",
-      "type": "Full-time",
-      "postedDate": "2025-02-05",
-      "shortDescription": "Create and execute marketing campaigns to drive brand awareness and user acquisition.",
-      "description": "We're seeking a Marketing Specialist to help grow our user base and build our brand. You'll create and execute marketing campaigns across various channels to drive user acquisition, engagement, and retention.",
-      "responsibilities": [
-        "Plan and execute marketing campaigns across digital channels",
-        "Create compelling content for our website, blog, and social media",
-        "Analyze campaign performance and optimize for results",
-        "Collaborate with product and design teams on marketing initiatives",
-        "Stay up-to-date with marketing trends and best practices"
-      ],
-      "requirements": [
-        "2+ years of experience in digital marketing",
-        "Experience with social media marketing and content creation",
-        "Knowledge of SEO and SEM principles",
-        "Familiarity with marketing analytics tools",
-        "Strong written and verbal communication skills"
-      ],
-      "preferred": [
-        "Experience with email marketing",
-        "Knowledge of graphic design principles",
-        "Experience with marketing automation tools",
-        "Background in the same industry",
-        "Experience with A/B testing and optimization"
-      ],
-      "salary": "$70,000 - $90,000",
-      "applicationEmail": "marketing@afrost.org"
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
     }
+    
   ]
 }
