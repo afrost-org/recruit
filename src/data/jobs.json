@@ -77,7 +77,192 @@
       ],
       "salary": "Negotiable",
       "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "SDE-2-python",
+      "title": "Software Developer Engineer - 2",
+      "department": "Software Development",
+      "location": "Noida",
+      "type": "Full-time",
+      "postedDate": "2025-04-25",
+      "shortDescription": "Join our engineering team to develop scalable, high-performance server-side applications using Python or Golang.",
+      "description": "As a Software Engineer at , you will help develop our next-generation cloud native core solution, contributing to our product and open-source community vision. The role requires writing scalable Python code and building robust, low-latency server-side logic.",
+      "responsibilities": [
+        "System engineering and implementation in Python or Golang.",
+        "Tackle performance issues using internal tools and creative experimentation.",
+        "Integrate relevant open-source projects aligned with product goals.",
+        "Write clean, efficient, well-documented Python/Golang code.",
+        "Engage in product definition, design, implementation, testing, and deployment.",
+        "Discuss abstract system architecture and solve technical challenges.",
+        "Mentor junior engineers and promote a culture of trust and ownership."
+      ],
+      "requirements": [
+        "Minimum 3 years of experience in Python development.",
+        "Strong Python skills with hands-on experience in reusable frameworks.",
+        "Experience with design-driven development, CI, and highly scalable systems.",
+        "Understanding of Kubernetes architecture and standard APIs.",
+        "Contribution to CNCF or other open-source communities is a plus.",
+        "Experience in performance benchmarking and cloud-native technologies."
+      ],
+      "preferred": [
+        "Background in building cost-optimized, high-performance software.",
+        "Experience with application security and functional programming.",
+        "Ability to influence hardware design from a software perspective."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "Technical-lead",
+      "title": "Technical Lead",
+      "department": "Software Development",
+      "location": "India",
+      "type": "Full-time",
+      "postedDate": "2025-04-25",
+      "shortDescription": "Lead engineering efforts on cloud-native and hyper-scale platforms while mentoring a growing team.",
+      "description": "As a Technical Lead , you’ll be responsible for guiding the technical vision and development of our next-generation cloud-native products. You’ll work closely with the team on system architecture, framework development, and open-source integration while leading by example.",
+      "responsibilities": [
+        "System engineering and implementation in Python/Golang/Java/ReactJS.",
+        "Resolve performance issues through creative experimentation and in-house tools.",
+        "Propose and integrate open-source projects based on product goals.",
+        "Write clean, well-documented Python code for mentoring purposes.",
+        "Oversee all phases of product lifecycle: design, implementation, testing, and deployment.",
+        "Discuss system architectures and apply domain expertise to technical problems.",
+        "Lead and mentor software engineers and promote a collaborative culture.",
+        "Contribute to REST API development and optimization."
+      ],
+      "requirements": [
+        "Bachelor’s or Master’s in Computer Science or related field.",
+        "8+ years of software development experience.",
+        "Proficiency with Python/Golang and reusable framework design.",
+        "Experience with microservices architecture and OpenStack is a plus.",
+        "Solid knowledge of networking and Kubernetes.",
+        "Familiarity with design patterns, code refactoring, CI/CD, and scalable app development."
+      ],
+      "preferred": [
+        "Cloud-native mindset and experience in problem-solving real-time systems.",
+        "Experience working with cloud and telecom product stacks.",
+        "Strong mentorship and team-building capabilities."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+
+    {
+      "id": "devops-kubernetes",
+      "title": "DevOps Engineer (Kubernetes)",
+      "department": "Software Development",
+      "location": "India",
+      "type": "Full-time",
+      "postedDate": "2025-04-24",
+      "shortDescription": "Automate and optimize scalable cloud deployments using Kubernetes.",
+      "description": "As a DevOps Engineer focused on Kubernetes and cloud infrastructure. You'll drive automation, identify system bottlenecks, and enhance performance across CI/CD and deployment workflows.",
+      "responsibilities": [
+        "Manage Kubernetes infrastructure including unmanaged and on-prem setups.",
+        "Optimize build/test systems to improve speed and reduce cost.",
+        "Plan infrastructure capacity across hybrid cloud setups.",
+        "Work with Helm charts, Jenkins, and GitHub for CI/CD pipelines."
+      ],
+      "requirements": [
+        "4+ years of experience in DevOps.",
+        "Strong background in Kubernetes, CI/CD, and container orchestration.",
+        "Experience with Docker, Helm, Prometheus, and Grafana.",
+        "Ability to troubleshoot performance issues in complex systems."
+      ],
+      "preferred": [
+        "Hands-on experience with multi-cloud and edge deployments.",
+        "Experience in capacity planning and optimization at scale."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "technical-writer",
+      "title": "Technical Writer",
+      "department": "Software Development",
+      "location": "Noida",
+      "type": "Full-time",
+      "postedDate": "2025-04-24",
+      "shortDescription": "Translate complex technical information into clear, user-friendly content.",
+      "description": "As a Technical Writer , you will create and maintain documentation such as user guides, API docs, release notes, and white papers. You’ll work closely with cross-functional teams to ensure content accuracy and accessibility.",
+      "responsibilities": [
+        "Write and maintain user guides, FAQs, and API documentation.",
+        "Collaborate with engineers, designers, and product teams for technical input.",
+        "Translate technical concepts for both technical and non-technical users.",
+        "Improve existing documentation through user feedback and testing."
+      ],
+      "requirements": [
+        "2+ years of technical writing experience.",
+        "Strong understanding of RESTful APIs, Markdown, Git, and Confluence.",
+        "Excellent communication skills and attention to detail.",
+        "Familiarity with cloud platforms and Kubernetes is a plus."
+      ],
+      "preferred": [
+        "Experience with content strategy and CMS platforms.",
+        "Knowledge of OpenStack, OpenShift, and multi-cloud environments."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "project-manager-tpm",
+      "title": "Technical Program Manager",
+      "department": "Software Development",
+      "location": "India",
+      "type": "Full-time",
+      "postedDate": "2025-04-24",
+      "shortDescription": "Lead OpenStack cloud deployments and ensure cross-functional delivery.",
+      "description": "We’re hiring a TPM to manage cloud projects focused on OpenStack and Kubernetes. You will coordinate engineering, product, and vendor stakeholders, ensuring timely and successful project execution.",
+      "responsibilities": [
+        "Manage cloud deployment projects and timelines.",
+        "Coordinate cross-functional teams and vendor partners.",
+        "Oversee OpenStack provisioning and CI/CD pipelines.",
+        "Implement Agile and DevOps best practices across teams."
+      ],
+      "requirements": [
+        "5–7 years of project management experience.",
+        "Strong knowledge of OpenStack, Kubernetes, and cloud infra.",
+        "Hands-on with Jira, Agile/Scrum practices, and CI/CD tooling.",
+        "Excellent communication and risk management skills."
+      ],
+      "preferred": [
+        "Certifications like PMP, PRINCE2, or CSM.",
+        "Experience managing enterprise cloud rollouts."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "vp-of-engineering",
+      "title": "VP of Engineering",
+      "department": "Software Development",
+      "location": "India",
+      "type": "Full-time",
+      "postedDate": "2025-04-24",
+      "shortDescription": "Lead engineering and DevOps teams to build sovereign cloud and GPU-based platforms.",
+      "description": "We’re seeking a VP of Engineering to drive technical vision for our sovereign cloud and GPU-as-a-service platform. You'll lead distributed engineering teams and define scalable strategies for compute, networking, and DevSecOps.",
+      "responsibilities": [
+        "Define and execute technical strategy for sovereign cloud.",
+        "Architect scalable GPU compute infrastructure and orchestration.",
+        "Lead engineering, DevOps, and SRE teams across regions.",
+        "Ensure regulatory compliance, CI/CD, and performance optimization."
+      ],
+      "requirements": [
+        "14+ years of experience in cloud or distributed systems.",
+        "Deep knowledge of Kubernetes, Go, Python, and DevSecOps.",
+        "Experience with GPU workloads, SDN, and cloud security.",
+        "Strong leadership in scaling cloud-native teams."
+      ],
+      "preferred": [
+        "Experience in sovereign/hyperscale cloud environments.",
+        "Expertise in Prometheus, Grafana, and infrastructure automation."
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
     }
-    
+
   ]
 }
+
+
+
