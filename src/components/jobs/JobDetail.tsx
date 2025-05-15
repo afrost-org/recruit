@@ -5,12 +5,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Job } from "@/types/job";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface JobDetailProps {
   job: Job;
@@ -392,9 +393,12 @@ const JobDetail = ({ job }: JobDetailProps) => {
                       <div className="mt-2">
                         <Label
                           htmlFor={question.id}
-                          className="relative cursor-pointer rounded-lg border border-dashed border-muted-foreground/20 p-4 hover:bg-accent transition-colors"
+                          className={cn(
+                            buttonVariants({ variant: "outline" }),
+                            "w-full justify-center"
+                          )}
                         >
-                          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-2">
                             <Upload className="h-4 w-4" />
                             <span>{resumeFile ? resumeFile.name : "Upload Resume"}</span>
                           </div>
@@ -403,7 +407,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
                             type="file"
                             accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={handleFileChange}
-                            className="hidden"
+                            className="sr-only"
                           />
                         </Label>
                         <p className="mt-1 text-xs text-muted-foreground">
