@@ -80,6 +80,11 @@ const JobDetail = ({ job }: JobDetailProps) => {
   const emailSubject = `Application for ${job.title} Position`;
 
   const handleAnswerChange = (questionId: string, value: string) => {
+    // For number inputs, ensure value is not negative
+    if ((questionId === 'years_experience' || questionId === 'notice_period') && value !== '') {
+      const numValue = parseFloat(value);
+      if (numValue < 0) return;
+    }
     setAnswers(prev => ({ ...prev, [questionId]: value }));
   };
 
@@ -413,6 +418,7 @@ const JobDetail = ({ job }: JobDetailProps) => {
                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                         placeholder={`Enter ${question.type === 'url' ? 'URL' : question.type}...`}
                         className="border-muted-foreground/20"
+                        {...(question.type === 'number' && question.id.match(/years_experience|notice_period/) ? { min: "0" } : {})}
                       />
                     )}
                   </div>
