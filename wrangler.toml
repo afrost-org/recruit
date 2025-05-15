@@ -9,8 +9,6 @@ compatibility_date = "2025-04-21"
 [env]
 production = { }
 
-[vars]
-R2_PUBLIC_URL = "https://499d93e9e13f6cd0a447046d098ffc11.r2.cloudflarestorage.com/resumes"
 
 [[kv_namespaces]]
 binding = "KV"

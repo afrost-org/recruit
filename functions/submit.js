@@ -138,6 +138,7 @@ export async function onRequestPost(context) {
       resumeFileName: resumeFileName,
       resumeType: resumeFile.type,
       resumeUrl: resumeUrl,
+      jobUrl: `${env.BASE_URL}/jobs/${applicationData.jobId}`,
       submittedAt: timestamp,
       status: 'new'
     };
@@ -167,6 +168,57 @@ export async function onRequestPost(context) {
           }
         }
       );
+
+      // Send notification to Google Chat
+      try {
+        const webhookUrl = env.GOOGLE_CHAT_WEBHOOK;
+        
+        // Create answers section
+        const answersText = applicationRecord.answers
+          .map(a => `${a.question}: ${a.answer}`)
+          .join('\n');
+
+        // Create getResume URL using the environment variable
+        const resumeDownloadUrl = `${env.BASE_URL}/getResume?file=${resumeFileName}`;
+        
+        const message = {
+          text: `🎉 New Job Application Received!\n\n` +
+                `Position: ${applicationRecord.title}\n` +
+                `Type: ${applicationRecord.type}\n` +
+                `Location: ${applicationRecord.location}\n` +
+                `🔗 Job Post: ${applicationRecord.jobUrl}\n\n` +
+                `📝 Application Details:\n${answersText}\n\n` +
+                `📎 Resume: ${resumeDownloadUrl}\n\n` +
+                `🆔 Application ID: ${applicationId}\n` +
+                `⏰ Submitted: ${timestamp}`
+        };
+
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(message)
+        });
+      } catch (notificationError) {
+        // Log the error but don't fail the request
+        console.error('Failed to send Google Chat notification:', notificationError);
+      }
+
+      // Return success response
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'Application submitted successfully',
+        applicationId: applicationId,
+        jobId: applicationData.jobId,
+        resumeUrl: resumeUrl
+      }), {
+        status: 201,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
     } catch (error) {
       console.error('Error storing in KV:', error);
       // Try to cleanup R2 file if KV storage fails
@@ -177,20 +229,6 @@ export async function onRequestPost(context) {
       }
       return new Response('Failed to store application data', { status: 500 });
     }
-
-    // Return success response
-    return new Response(JSON.stringify({
-      success: true,
-      message: 'Application submitted successfully',
-      applicationId: applicationId,
-      jobId: applicationData.jobId,
-      resumeUrl: resumeUrl
-    }), {
-      status: 201,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
 
   } catch (err) {
     console.error('Error processing job application:', err);
