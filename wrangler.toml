@@ -3,7 +3,7 @@ name = "recruit"
 
 pages_build_output_dir = "dist"
 compatibility_date = "2025-04-21"
-main="dist/index.html"
+
 
 [build]
 command = "yarn build"
