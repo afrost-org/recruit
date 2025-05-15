@@ -33,6 +33,7 @@ A modern, serverless job application system built with React and Cloudflare Page
 - File storage in Cloudflare R2
 - Application data in Cloudflare KV
 - Google Chat webhook integration
+- Dynamic URL generation based on request origin
 
 ### Storage
 - **Cloudflare KV**: Application data and job-application relationships
@@ -49,15 +50,13 @@ A modern, serverless job application system built with React and Cloudflare Page
 ### Environment Variables
 Create a `.dev.vars` file for local development:
 ```env
-BASE_URL=http://127.0.0.1:8788
 GOOGLE_CHAT_WEBHOOK=your-google-chat-webhook-url
-R2_PUBLIC_URL = "your-r2-public-url"
+R2_PUBLIC_URL=your-r2-public-url
 ```
 
 Update `wrangler.toml` with your production values:
 ```toml
 [vars]
-BASE_URL = "https://your-production-url"
 GOOGLE_CHAT_WEBHOOK = "your-google-chat-webhook-url"
 R2_PUBLIC_URL = "your-r2-public-url"
 
@@ -95,6 +94,7 @@ npm run dev
 - Processes multipart form data
 - Stores application data and resume
 - Sends notification to Google Chat
+- Automatically generates URLs based on request origin
 
 ### Get Resume
 `GET /getResume`
@@ -135,6 +135,7 @@ interface ApplicationAnswer {
 - No direct R2 URL exposure
 - Environment-based configuration
 - Proper error handling and validation
+- Dynamic URL generation for security
 
 ## Development
 

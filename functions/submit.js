@@ -138,7 +138,7 @@ export async function onRequestPost(context) {
       resumeFileName: resumeFileName,
       resumeType: resumeFile.type,
       resumeUrl: resumeUrl,
-      jobUrl: `${env.BASE_URL}/jobs/${applicationData.jobId}`,
+      jobUrl: `${new URL(request.url).origin}/jobs/${applicationData.jobId}`,
       submittedAt: timestamp,
       status: 'new'
     };
@@ -172,21 +172,22 @@ export async function onRequestPost(context) {
       // Send notification to Google Chat
       try {
         const webhookUrl = env.GOOGLE_CHAT_WEBHOOK;
+        const baseUrl = new URL(request.url).origin;
         
         // Create answers section
         const answersText = applicationRecord.answers
           .map(a => `${a.question}: ${a.answer}`)
           .join('\n');
 
-        // Create getResume URL using the environment variable
-        const resumeDownloadUrl = `${env.BASE_URL}/getResume?file=${resumeFileName}`;
+        // Create getResume URL using request origin
+        const resumeDownloadUrl = `${baseUrl}/getResume?file=${resumeFileName}`;
         
         const message = {
           text: `🎉 New Job Application Received!\n\n` +
                 `Position: ${applicationRecord.title}\n` +
                 `Type: ${applicationRecord.type}\n` +
                 `Location: ${applicationRecord.location}\n` +
-                `🔗 Job Post: ${applicationRecord.jobUrl}\n\n` +
+                `🔗 Job Post: ${baseUrl}/jobs/${applicationData.jobId}\n\n` +
                 `📝 Application Details:\n${answersText}\n\n` +
                 `📎 Resume: ${resumeDownloadUrl}\n\n` +
                 `🆔 Application ID: ${applicationId}\n` +
