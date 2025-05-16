@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
+import { Toaster } from "@/components/ui/toaster";
 
 // Lazy load pages
 const HomePage = lazy(() => import("@/pages/HomePage"));
@@ -34,6 +35,7 @@ function App() {
           <Route path="/jobs/:jobId" element={<JobPage />} />
         </Routes>
       </Suspense>
+      <Toaster />
     </Layout>
   );
 }

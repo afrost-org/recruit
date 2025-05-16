@@ -1,23 +1,77 @@
-import { ArrowLeft, Building2, CalendarDays, Clock, MapPin, Copy, Check } from "lucide-react";
+import { ArrowLeft, Building2, CalendarDays, Clock, MapPin, Copy, Check, Upload } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Job } from "@/types/job";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface JobDetailProps {
   job: Job;
 }
 
+// Default application questions if none provided
+const defaultQuestions = [
+  {
+    id: "full_name",
+    question: "Full Name",
+    type: "text"
+  },
+  {
+    id: "email",
+    question: "Email Address",
+    type: "email"
+  },
+  {
+    id: "phone",
+    question: "Phone Number",
+    type: "tel"
+  },
+  {
+    id: "years_experience",
+    question: "Years of Experience",
+    type: "number"
+  },
+  {
+    id: "current_role",
+    question: "Current Role",
+    type: "text"
+  },
+  {
+    id: "current_company",
+    question: "Current Company",
+    type: "text"
+  },
+  {
+    id: "resume",
+    question: "Resume (PDF, DOC, DOCX)",
+    type: "file"
+  },
+  {
+    id: "linkedin",
+    question: "LinkedIn Profile URL",
+    type: "url"
+  },
+  {
+    id: "notice_period",
+    question: "Notice Period (in weeks)",
+    type: "number"
+  }
+];
+
 const JobDetail = ({ job }: JobDetailProps) => {
   const [copied, setCopied] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const { toast } = useToast();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -27,7 +81,40 @@ const JobDetail = ({ job }: JobDetailProps) => {
   const emailSubject = `Application for ${job.title} Position`;
 
   const handleAnswerChange = (questionId: string, value: string) => {
+    // For number inputs, ensure value is not negative
+    if ((questionId === 'years_experience' || questionId === 'notice_period') && value !== '') {
+      const numValue = parseFloat(value);
+      if (numValue < 0) return;
+    }
     setAnswers(prev => ({ ...prev, [questionId]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Check file type
+      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(file.type)) {
+        toast({
+          title: "Invalid File Type",
+          description: "Please upload a PDF, DOC, or DOCX file",
+          variant: "destructive",
+        });
+        e.target.value = '';
+        return;
+      }
+      // Check file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File Too Large",
+          description: "Please upload a file smaller than 5MB",
+          variant: "destructive",
+        });
+        e.target.value = '';
+        return;
+      }
+      setResumeFile(file);
+    }
   };
 
   const formatEmailBody = () => {
@@ -57,10 +144,98 @@ const JobDetail = ({ job }: JobDetailProps) => {
     }
   };
 
-  const handleApply = (e: React.MouseEvent) => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:${job.applicationEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(formatEmailBody())}`;
-    window.open(mailtoUrl, '_blank');
+    setIsSubmitting(true);
+
+    try {
+      // Get questions to validate (either job-specific or default)
+      const questions = job.applicationQuestions || defaultQuestions;
+      
+      // Validate required answers
+      const missingAnswers = questions
+        .filter(q => q.type !== 'file')
+        .filter(q => !answers[q.id]);
+
+      if (missingAnswers.length > 0) {
+        toast({
+          title: "Missing Information",
+          description: "Please answer all application questions before submitting.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Validate resume
+      if (!resumeFile) {
+        toast({
+          title: "Missing Resume",
+          description: "Please upload your resume before submitting.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Create form data for multipart submission
+      const formData = new FormData();
+      formData.append('resume', resumeFile);
+      
+      // Add application data
+      const applicationData = {
+        jobId: job.id,
+        title: job.title,
+        company: job.department,
+        type: job.type,
+        location: job.location,
+        applicationEmail: job.applicationEmail,
+        answers: questions
+          .filter(q => q.type !== 'file')
+          .map(q => ({
+            questionId: q.id,
+            question: q.question,
+            answer: answers[q.id],
+          })),
+      };
+      
+      formData.append('application', JSON.stringify(applicationData));
+
+      // Submit to backend
+      const response = await fetch('/submit', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit application');
+      }
+
+      const data = await response.json();
+
+      // Show success message
+      toast({
+        title: "Application Submitted",
+        description: "Your application has been submitted successfully!",
+      });
+
+      // Clear form
+      setAnswers({});
+      setResumeFile(null);
+      // Reset file input
+      const fileInput = document.getElementById('resume') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -207,73 +382,65 @@ const JobDetail = ({ job }: JobDetailProps) => {
               )}
 
               {/* Application Questions */}
-              {job.applicationQuestions && (
-                <div className="space-y-4">
-                  <h3 className="font-serif text-sm font-medium">Application Questions</h3>
-                  {job.applicationQuestions.map((question) => (
-                    <div key={question.id} className="space-y-2">
-                      <Label htmlFor={question.id} className="font-medium">
-                        {question.question}
-                      </Label>
-                      {question.type === 'text' ? (
-                        <Textarea
-                          id={question.id}
-                          rows={3}
-                          value={answers[question.id] || ''}
-                          onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                          placeholder="Your answer..."
-                          className="border-muted-foreground/20"
-                        />
-                      ) : (
-                        <Input
-                          id={question.id}
-                          type={question.type}
-                          value={answers[question.id] || ''}
-                          onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                          placeholder={`Enter ${question.type === 'url' ? 'URL' : 'email address'}...`}
-                          className="border-muted-foreground/20"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="space-y-4">
+                <h3 className="font-serif text-sm font-medium">Application Questions</h3>
+                {(job.applicationQuestions || defaultQuestions).map((question) => (
+                  <div key={question.id} className="space-y-2">
+                    <Label htmlFor={question.id} className="font-medium">
+                      {question.question}
+                    </Label>
+                    {question.type === 'file' ? (
+                      <div className="mt-2">
+                        <Label
+                          htmlFor={question.id}
+                          className={cn(
+                            buttonVariants({ variant: "outline" }),
+                            "w-full justify-center"
+                          )}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Upload className="h-4 w-4" />
+                            <span>{resumeFile ? resumeFile.name : "Upload Resume"}</span>
+                          </div>
+                          <Input
+                            id={question.id}
+                            type="file"
+                            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            onChange={handleFileChange}
+                            className="sr-only"
+                          />
+                        </Label>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Accepted formats: PDF, DOC, DOCX (max 5MB)
+                        </p>
+                      </div>
+                    ) : (
+                      <Input
+                        id={question.id}
+                        type={question.type}
+                        value={answers[question.id] || ''}
+                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                        placeholder={`Enter ${question.type === 'url' ? 'URL' : question.type}...`}
+                        className="border-muted-foreground/20"
+                        {...(question.type === 'number' && question.id.match(/years_experience|notice_period/) ? { min: "0" } : {})}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
 
               <div className="space-y-4">
-                <div className="rounded-lg border p-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-serif text-sm font-medium">Application Email</h3>
-                    <Button
-                      onClick={handleCopy}
-                      variant="secondary"
-                      size="sm"
-                      className="text-xs"
-                    >
-                      {copied ? (
-                        <>
-                          <Check className="h-4 w-4 mr-1" />
-                          <span>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-4 w-4 mr-1" />
-                          <span>Copy Details</span>
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                  <p className="text-sm text-muted-foreground break-all">{job.applicationEmail}</p>
-                </div>
                 <Button
-                  onClick={handleApply}
+                  onClick={handleSubmit}
                   className="w-full"
+                  disabled={isSubmitting}
                 >
-                  Apply Now
+                  {isSubmitting ? "Submitting..." : "Submit Application"}
                 </Button>
+                <p className="text-center text-xs text-muted-foreground">
+                  Your application will be reviewed by our hiring team
+                </p>
               </div>
-              <p className="text-center text-xs text-muted-foreground">
-                Click Apply Now to open your email client, or copy the details to apply manually
-              </p>
             </CardContent>
           </Card>
         </div>
