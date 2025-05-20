@@ -6,8 +6,7 @@ compatibility_date = "2025-04-21"
 
 
 
-[env]
-production = { }
+
 
 
 [[kv_namespaces]]
