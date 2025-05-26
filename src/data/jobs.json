@@ -147,35 +147,6 @@
       "salary": "Negotiable",
       "applicationEmail": "recruit@afrost.org"
     },
-
-    {
-      "id": "devops-kubernetes",
-      "title": "DevOps Engineer (Kubernetes)",
-      "department": "Software Development",
-      "location": "India",
-      "type": "Permanent Job",
-      "postedDate": "2025-04-24",
-      "shortDescription": "Automate and optimize scalable cloud deployments using Kubernetes.",
-      "description": "As a DevOps Engineer focused on Kubernetes and cloud infrastructure. You'll drive automation, identify system bottlenecks, and enhance performance across CI/CD and deployment workflows.",
-      "responsibilities": [
-        "Manage Kubernetes infrastructure including unmanaged and on-prem setups.",
-        "Optimize build/test systems to improve speed and reduce cost.",
-        "Plan infrastructure capacity across hybrid cloud setups.",
-        "Work with Helm charts, Jenkins, and GitHub for CI/CD pipelines."
-      ],
-      "requirements": [
-        "4+ years of experience in DevOps.",
-        "Strong background in Kubernetes, CI/CD, and container orchestration.",
-        "Experience with Docker, Helm, Prometheus, and Grafana.",
-        "Ability to troubleshoot performance issues in complex systems."
-      ],
-      "preferred": [
-        "Hands-on experience with multi-cloud and edge deployments.",
-        "Experience in capacity planning and optimization at scale."
-      ],
-      "salary": "Negotiable",
-      "applicationEmail": "recruit@afrost.org"
-    },
     {
       "id": "technical-writer",
       "title": "Technical Writer",
