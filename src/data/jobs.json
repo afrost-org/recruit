@@ -1,56 +1,5 @@
 {
-  "jobs": [
-    {
-      "id": "Gen AI Engineer",
-      "title": "Gen AI Engineer",
-      "department": "Advanced Engineering Services",
-      "location": "Bengaluru", 
-      "type": "Permanent Job",
-      "postedDate": "2025-07-25",
-      "shortDescription": "Full Stack Technical Lead with Management skills in Python, Generative AI",
-      "description": "We are seeking a hands-on Full Stack Web Technical Lead with strong technical management skills to lead and guide development teams in delivering high-quality web applications. This role requires deep expertise in cloud-native architecture, full-stack web development, and hands-on coding, particularly in Python. The ideal candidate will drive estimations, task breakdowns, code reviews, and guide the team to successfully deliver projects. In addition, the role involves leading small-scale POCs, contributing to the technical roadmap, and staying at the forefront of Generative AI application development.",
-      "responsibilities": [
-        "Lead and mentor a team of full-stack developers, providing technical guidance throughout the development lifecycle",
-        "Drive task estimation and planning, creating detailed work breakdown structures",
-        "Conduct peer reviews of code, ensuring high quality, performance, and security standards",
-        "Foster a collaborative and innovative team environment",
-        "Build and maintain cloud-native applications using Python, React, and modern frameworks",
-        "Deploy applications on cloud platforms using Docker and Kubernetes",
-        "Design scalable and secure architectures for web application stacks",
-        "Lead cloud-native architecture design and development",
-        "Integrate cloud-native services and microservices architectures",
-        "Lead small-scale POCs for new technologies and Generative AI applications",
-        "Develop web applications leveraging Generative AI and AI models",
-        "Stay current with AI trends and implement innovative solutions",
-        "Own end-to-end web application delivery from design to deployment",
-        "Drive agile development processes and best practices",
-        "Implement CI/CD pipelines and testing automation"
-      ],
-      "requirements": [
-        "8+ years of experience in full-stack web development, with at least 2 years in a technical lead role",
-        "Proficiency in Python and experience in building backend services using frameworks such as Django, Flask, or FastAPI",
-        "Strong expertise in front-end development with frameworks like React, Angular, or Vue.js",
-        "Solid understanding of databases (SQL/NoSQL) and integration of back-end services with front-end interfaces",
-        "Experience with cloud-native architecture, designing and deploying applications on AWS, Azure, or Google Cloud",
-        "Experience with Kubernetes, Docker, serverless, and microservices architectures",
-        "Deep understanding of full-stack web development from front-end to backend, and cloud infrastructure",
-        "Practical experience in developing applications that leverage Generative AI technologies and AI/ML models",
-        "Strong experience in leading teams using Agile methodologies, driving continuous delivery and improvement",
-        "Proven leadership abilities with strong communication and mentoring skills",
-        "Demonstrated problem-solving abilities with focus on scalable, reliable solutions",
-        "Bachelor's or Master's degree in Computer Science, Engineering, or related field"
-      ],
-      "preferred": [
-        "Experience with AI frameworks such as TensorFlow, PyTorch, or Hugging Face",
-        "Familiarity with Generative AI models and their application in web development",
-        "Experience in building and deploying AI-driven applications",
-        "Knowledge of DevOps practices and tools for CI/CD pipelines",
-        "Experience with performance optimization and security best practices in web applications"
-      ],
-      "salary": "Negotiable",
-      "applicationEmail": "recruit@afrost.org"
-    }
-  ]
+  "jobs": []
 }
 
 
