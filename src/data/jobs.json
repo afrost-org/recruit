@@ -1,5 +1,21 @@
 {
-  "jobs": []
+  "jobs": [
+    {
+      "id": "sample-position",
+      "title": "Sample Position",
+      "department": "Engineering",
+      "location": "Remote",
+      "type": "Full-time",
+      "postedDate": "2025-08-21",
+      "shortDescription": "This is a sample position to fix build issues",
+      "description": "Sample description",
+      "responsibilities": ["Sample responsibility"],
+      "requirements": ["Sample requirement"],
+      "preferred": ["Sample preferred skill"],
+      "salary": "Competitive",
+      "applicationEmail": "careers@example.com"
+    }
+  ]
 }
 
 
