@@ -1,19 +1,42 @@
 {
   "jobs": [
     {
-      "id": "sample-position",
-      "title": "Sample Position",
+      "id": "python-developer-visual-ai",
+      "title": "Python Developer – Visual AI Model Integration & Web Automation",
       "department": "Engineering",
-      "location": "Remote",
+      "location": "Office",
       "type": "Full-time",
-      "postedDate": "2025-08-21",
-      "shortDescription": "This is a sample position to fix build issues",
-      "description": "Sample description",
-      "responsibilities": ["Sample responsibility"],
-      "requirements": ["Sample requirement"],
-      "preferred": ["Sample preferred skill"],
-      "salary": "Competitive",
-      "applicationEmail": "careers@example.com"
+      "postedDate": "2025-10-09",
+      "shortDescription": "Experienced Python developer to implement pre-trained deep learning models into intelligent browser-based automation workflows using image recognition for visual decision-making.",
+      "description": "We are looking for an experienced Python developer to implement pre-trained deep learning models (YOLOv5/YOLOv8) into intelligent browser-based automation workflows. The role involves using image recognition outputs to drive visual decision-making, automate user actions, and create robust pipelines that combine AI and web interfaces. This position is ideal for someone who understands both AI inference and real-time automation using Python.",
+      "responsibilities": [
+        "Load and infer from pre-trained computer vision models (object detection, keypoints, segmentation)",
+        "Capture and process images/screenshots from dynamic web environments using Python",
+        "Analyze model outputs and implement logic to interact with visual elements (click, drag, etc.)",
+        "Integrate with browser automation frameworks (such as Selenium, Pyppeteer, or undetected-chromedriver)",
+        "Handle asynchronous task execution, proxy rotation, and session management",
+        "Write clean, modular, and maintainable Python code with detailed logging and exception handling",
+        "Optionally develop lightweight API endpoints using FastAPI or Flask to expose model inference pipelines"
+      ],
+      "requirements": [
+        "Strong Python 3.x programming experience (3+ years)",
+        "Proficiency with at least one of the following deep learning stacks: YOLOv5 / YOLOv8 (Ultralytics or custom PyTorch models)",
+        "OpenCV, NumPy, and Pillow for image preprocessing and analysis",
+        "Hands-on experience with browser automation tools: Selenium, Pyppeteer or undetected-chromedriver",
+        "Ability to convert model predictions (bounding boxes, segmentation masks, or keypoints) into actionable browser logic",
+        "Solid understanding of DOM structures, event-based UI interaction, and visual layout handling",
+        "Familiarity with multithreading, asyncio, or task queuing in Python",
+        "Bachelor's or Master's degree in Computer Science, Artificial Intelligence, or related technical discipline",
+        "Demonstrated experience building or integrating visual-AI powered tools into practical workflows"
+      ],
+      "preferred": [
+        "Experience with FastAPI or Flask for serving model inference endpoints",
+        "Prior work involving automation of interactive web interfaces or visual feedback loops",
+        "Understanding of headless browsers, stealth automation techniques, and anti-bot evasion",
+        "Knowledge of proxy configuration and session isolation"
+      ],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
     }
   ]
 }
