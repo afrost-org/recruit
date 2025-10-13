@@ -37,9 +37,32 @@
       ],
       "salary": "Negotiable",
       "applicationEmail": "recruit@afrost.org"
+    },
+    {
+      "id": "mern-stack-developer",
+      "title": "MERN Stack Developer",
+      "department": "Engineering",
+      "location": "Office",
+      "type": "Full-time",
+      "postedDate": "2025-10-13",
+      "shortDescription": "Seeking an experienced MERN Stack developer to design, build, and maintain scalable web applications using modern technologies.",
+      "description": "We are looking for a skilled MERN Stack developer with solid experience in building and managing web applications. This role involves collaborating with teams to deliver high-quality products following best practices in software development.",
+      "responsibilities": [
+        "Design, code, test and manage various applications",
+        "Collaborate with engineering team and product team to establish best products",
+        "Follow outlined standards of quality related to code and systems",
+        "Develop automated tests and conduct performance tuning"
+      ],
+      "requirements": [
+        "Bachelor's degree in technology, MCA or relevant field",
+        "Degree should complete and have basic experience of MERN Stack working with or relevant experiences",
+        "Experience developing web-based applications in MERN stack developers usage of technologies like NodeJS, MongoDB, React.js, Angular, Express, and Redux",
+        "Creating applications and systems based on wireframes and product requirements",
+        "Experience working in agile development environment. They work as part of a cross-functional team and are expected to have a strong understanding of various programming languages and tools"
+      ],
+      "preferred": [],
+      "salary": "Negotiable",
+      "applicationEmail": "recruit@afrost.org"
     }
   ]
 }
-
-
-
