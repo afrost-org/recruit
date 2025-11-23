@@ -1,41 +1,45 @@
 {
   "jobs": [
     {
-      "id": "python-developer-visual-ai",
-      "title": "Python Developer – Visual AI Model Integration & Web Automation",
-      "department": "Engineering",
-      "location": "Office",
+      "id": "azure-bi-automation-specialist",
+      "title": "Azure BI & Automation Specialist – Data Engineering & Process Automation",
+      "department": "Advisory / Consulting – Data & Automation",
+      "location": "Gurgaon – India",
       "type": "Full-time",
-      "postedDate": "2025-10-09",
-      "shortDescription": "Experienced Python developer to implement pre-trained deep learning models into intelligent browser-based automation workflows using image recognition for visual decision-making.",
-      "description": "We are looking for an experienced Python developer to implement pre-trained deep learning models (YOLOv5/YOLOv8) into intelligent browser-based automation workflows. The role involves using image recognition outputs to drive visual decision-making, automate user actions, and create robust pipelines that combine AI and web interfaces. This position is ideal for someone who understands both AI inference and real-time automation using Python.",
+      "postedDate": "2025-11-23",
+      "shortDescription": "Hands-on Azure cloud data engineer with strong BI, Power Platform, and process automation experience to drive digitization and intelligence initiatives across service lines, with exposure to M&A domain.",
+      "description": "We are looking for an experienced professional to design and deliver end-to-end data, BI, and automation solutions on Microsoft Azure and Power Platform. The role focuses on building scalable cloud/on-prem data pipelines, implementing business intelligence layers, identifying AI opportunities, and driving lean/six-sigma based transformation engagements.",
       "responsibilities": [
-        "Load and infer from pre-trained computer vision models (object detection, keypoints, segmentation)",
-        "Capture and process images/screenshots from dynamic web environments using Python",
-        "Analyze model outputs and implement logic to interact with visual elements (click, drag, etc.)",
-        "Integrate with browser automation frameworks (such as Selenium, Pyppeteer, or undetected-chromedriver)",
-        "Handle asynchronous task execution, proxy rotation, and session management",
-        "Write clean, modular, and maintainable Python code with detailed logging and exception handling",
-        "Optionally develop lightweight API endpoints using FastAPI or Flask to expose model inference pipelines"
+        "Apply proprietary and industry-leading methodologies to standardize activities across the engagement life cycle for service lines",
+        "Implement lean / six sigma frameworks to assess as-is and to-be data/automation maturity and define scope",
+        "Build and implement cloud/on-prem solutions for data-driven decision intelligence using ELT techniques, data marts, and BI layers",
+        "Develop automation solutions using Microsoft Power Platform suite and identify AI opportunities",
+        "Communicate effectively with cross-functional teams across the GCC",
+        "Demonstrate strong initiative, high energy, adaptability to new challenges, and ability to manage multiple workstreams",
+        "Work both independently and collaboratively with robust communication skills",
+        "Provide clear and concise messaging to teammates, clients, and technology personnel",
+        "Uphold the firm’s code of ethics and business conduct"
       ],
       "requirements": [
-        "Strong Python 3.x programming experience (3+ years)",
-        "Proficiency with at least one of the following deep learning stacks: YOLOv5 / YOLOv8 (Ultralytics or custom PyTorch models)",
-        "OpenCV, NumPy, and Pillow for image preprocessing and analysis",
-        "Hands-on experience with browser automation tools: Selenium, Pyppeteer or undetected-chromedriver",
-        "Ability to convert model predictions (bounding boxes, segmentation masks, or keypoints) into actionable browser logic",
-        "Solid understanding of DOM structures, event-based UI interaction, and visual layout handling",
-        "Familiarity with multithreading, asyncio, or task queuing in Python",
-        "Bachelor's or Master's degree in Computer Science, Artificial Intelligence, or related technical discipline",
-        "Demonstrated experience building or integrating visual-AI powered tools into practical workflows"
+        "Minimum 3–5 years of related work experience in PL/SQL and Business Intelligence, delivering end-to-end integrated BI solutions",
+        "2+ years proven hands-on experience with MS Azure services (Azure Data Factory, Azure Data Explorer, Storage, Data Lake, Synapse Analytics, Analysis Services, Databricks)",
+        "Strong experience with BI tools (PowerBI, Alteryx, Tableau etc.) and advanced techniques including Geo-Spatial analysis (Azure Maps, ArcGIS)",
+        "Awareness of Azure-based deployment and foundational knowledge of Azure Cognitive Services",
+        "Proficiency in Python, NoSQL, and PL/SQL",
+        "Good understanding of BI best practices, analysis, visualization, and latest trends",
+        "Basic awareness of statistical techniques (linear/non-linear regression, classification, optimization)",
+        "Knowledge of data orchestration, ingestion, ELT patterns, and reporting architecture (on-prem & cloud)",
+        "Experience in Merger & Acquisition domains (due diligence, deal structuring, financial reporting, value creation, post-merger phases)",
+        "Bachelor’s degree in Engineering from a Tier-1 college (Master’s in Business/domain is a plus)",
+        "Experience in programming, business intelligence, and enterprise resource systems including data collection and analysis"
       ],
       "preferred": [
-        "Experience with FastAPI or Flask for serving model inference endpoints",
-        "Prior work involving automation of interactive web interfaces or visual feedback loops",
-        "Understanding of headless browsers, stealth automation techniques, and anti-bot evasion",
-        "Knowledge of proxy configuration and session isolation"
+        "Master’s degree in Business or relevant domain",
+        "Exposure to Azure Cognitive Services integration with Data Science workflows",
+        "Advanced Geo-Spatial dashboarding capabilities",
+        "Prior experience in consulting / Big4 / professional services environment"
       ],
-      "salary": "Negotiable",
+      "salary": "Competitive (as per industry standards)",
       "applicationEmail": "recruit@afrost.org"
     }
   ]
