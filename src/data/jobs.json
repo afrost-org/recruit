@@ -1,43 +1,40 @@
 {
   "jobs": [
     {
-      "id": "azure-bi-automation-specialist",
-      "title": "Azure BI & Automation Specialist – Data Engineering & Process Automation",
-      "department": "Advisory / Consulting – Data & Automation",
-      "location": "Gurgaon – India",
+      "id": "systems-engineer-linux-automation",
+      "title": "Systems Engineer (Linux & Automation)",
+      "department": "Infrastructure / Platform Engineering",
+      "location": "New Delhi, India",
       "type": "Full-time",
-      "postedDate": "2025-11-23",
-      "shortDescription": "Hands-on Azure cloud data engineer with strong BI, Power Platform, and process automation experience to drive digitization and intelligence initiatives across service lines, with exposure to M&A domain.",
-      "description": "We are looking for an experienced professional to design and deliver end-to-end data, BI, and automation solutions on Microsoft Azure and Power Platform. The role focuses on building scalable cloud/on-prem data pipelines, implementing business intelligence layers, identifying AI opportunities, and driving lean/six-sigma based transformation engagements.",
+      "postedDate": "2026-03-03",
+      "shortDescription": "Hands-on Systems Engineer to design, automate, optimize, and scale Linux production infrastructure with strong ownership and an automation-first mindset.",
+      "description": "We’re looking for a hands-on Systems Engineer who understands Linux deeply and enjoys building infrastructure from the ground up. This is not a maintenance role. You will design, automate, optimize, and scale production systems. You should be comfortable debugging at the kernel level, writing clean automation scripts, and taking ownership of infrastructure decisions. If you enjoy solving hard system problems and hate repetitive manual work, you’ll fit right in.",
       "responsibilities": [
-        "Apply proprietary and industry-leading methodologies to standardize activities across the engagement life cycle for service lines",
-        "Implement lean / six sigma frameworks to assess as-is and to-be data/automation maturity and define scope",
-        "Build and implement cloud/on-prem solutions for data-driven decision intelligence using ELT techniques, data marts, and BI layers",
-        "Develop automation solutions using Microsoft Power Platform suite and identify AI opportunities",
-        "Communicate effectively with cross-functional teams across the GCC",
-        "Demonstrate strong initiative, high energy, adaptability to new challenges, and ability to manage multiple workstreams",
-        "Work both independently and collaboratively with robust communication skills",
-        "Provide clear and concise messaging to teammates, clients, and technology personnel",
-        "Uphold the firm’s code of ethics and business conduct"
+        "Own and manage Linux-based production systems",
+        "Build and maintain infrastructure automation using Ansible, Puppet, or similar tools",
+        "Deploy and operate distributed systems, including Ceph or similar storage platforms",
+        "Write automation and tooling in Bash and Python",
+        "Debug performance bottlenecks across CPU, memory, I/O, and networking",
+        "Implement monitoring, logging, and alerting",
+        "Improve reliability, scalability, and system performance",
+        "Automate everything that repeats more than once"
       ],
       "requirements": [
-        "Minimum 3–5 years of related work experience in PL/SQL and Business Intelligence, delivering end-to-end integrated BI solutions",
-        "2+ years proven hands-on experience with MS Azure services (Azure Data Factory, Azure Data Explorer, Storage, Data Lake, Synapse Analytics, Analysis Services, Databricks)",
-        "Strong experience with BI tools (PowerBI, Alteryx, Tableau etc.) and advanced techniques including Geo-Spatial analysis (Azure Maps, ArcGIS)",
-        "Awareness of Azure-based deployment and foundational knowledge of Azure Cognitive Services",
-        "Proficiency in Python, NoSQL, and PL/SQL",
-        "Good understanding of BI best practices, analysis, visualization, and latest trends",
-        "Basic awareness of statistical techniques (linear/non-linear regression, classification, optimization)",
-        "Knowledge of data orchestration, ingestion, ELT patterns, and reporting architecture (on-prem & cloud)",
-        "Experience in Merger & Acquisition domains (due diligence, deal structuring, financial reporting, value creation, post-merger phases)",
-        "Bachelor’s degree in Engineering from a Tier-1 college (Master’s in Business/domain is a plus)",
-        "Experience in programming, business intelligence, and enterprise resource systems including data collection and analysis"
+        "3–8 years of relevant experience in systems engineering and Linux operations",
+        "Deep understanding of Linux processes, memory, and filesystems",
+        "Strong networking and TCP/IP fundamentals",
+        "Hands-on experience with systemd and service management",
+        "Comfortable using tools such as strace, tcpdump, iostat, vmstat, perf, and lsof",
+        "Experience with Ansible, Puppet, or similar infrastructure automation tools",
+        "Comfortable writing production-grade Bash and Python scripts",
+        "Belief in and practical adoption of Infrastructure-as-Code",
+        "Ability to build infrastructure from scratch and take ownership in ambiguous environments"
       ],
       "preferred": [
-        "Master’s degree in Business or relevant domain",
-        "Exposure to Azure Cognitive Services integration with Data Science workflows",
-        "Advanced Geo-Spatial dashboarding capabilities",
-        "Prior experience in consulting / Big4 / professional services environment"
+        "Experience with Kubernetes",
+        "Experience with distributed storage systems such as Ceph or ZFS",
+        "Exposure to high-performance or GPU-based environments",
+        "Startup or early-stage company experience"
       ],
       "salary": "Competitive (as per industry standards)",
       "applicationEmail": "recruit@afrost.org"
