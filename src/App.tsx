@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 // Lazy load pages
 const HomePage = lazy(() => import("@/pages/HomePage"));
 const JobPage = lazy(() => import("@/pages/JobPage"));
+const AdminPage = lazy(() => import("@/pages/AdminPage"));
 
 // Fallback loading component
 const PageSkeleton = () => (
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/jobs/:jobId" element={<JobPage />} />
+          <Route path="/hq" element={<AdminPage />} />
         </Routes>
       </Suspense>
       <Toaster />

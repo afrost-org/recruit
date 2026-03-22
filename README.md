@@ -12,7 +12,7 @@ A modern, serverless job application system built with React and Cloudflare Page
 - File size validation (max 5MB)
 
 ### For Recruiters
-- Instant notifications via Google Chat for new applications
+- Instant notifications via Telegram for new applications
 - Direct access to candidate information
 - Secure resume download links
 - Organized application tracking
@@ -32,7 +32,7 @@ A modern, serverless job application system built with React and Cloudflare Page
 - Multipart form data handling
 - File storage in Cloudflare R2
 - Application data in Cloudflare KV
-- Google Chat webhook integration
+- Telegram bot notification integration
 - Dynamic URL generation based on request origin
 
 ### Storage
@@ -50,14 +50,16 @@ A modern, serverless job application system built with React and Cloudflare Page
 ### Environment Variables
 Create a `.dev.vars` file for local development:
 ```env
-GOOGLE_CHAT_WEBHOOK=your-google-chat-webhook-url
+TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+TELEGRAM_CHAT_ID=your-telegram-chat-id
 R2_PUBLIC_URL=your-r2-public-url
 ```
 
 Update `wrangler.toml` with your production values:
 ```toml
 [vars]
-GOOGLE_CHAT_WEBHOOK = "your-google-chat-webhook-url"
+TELEGRAM_BOT_TOKEN = "your-telegram-bot-token"
+TELEGRAM_CHAT_ID = "your-telegram-chat-id"
 R2_PUBLIC_URL = "your-r2-public-url"
 
 [[kv_namespaces]]
@@ -93,7 +95,7 @@ npm run dev
 - Handles job application submissions
 - Processes multipart form data
 - Stores application data and resume
-- Sends notification to Google Chat
+- Sends notification to Telegram
 - Automatically generates URLs based on request origin
 
 ### Get Resume
