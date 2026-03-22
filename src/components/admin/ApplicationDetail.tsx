@@ -23,15 +23,19 @@ export interface ApplicationRecord {
   type: string;
   location: string;
   applicationEmail?: string;
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  yearsExperience?: string;
+  currentRole?: string;
+  currentCompany?: string;
+  linkedin?: string;
+  noticePeriod?: string;
   submittedAt: string;
   status: string;
   resumeUrl?: string;
   resumeFileName?: string;
-  answers: { questionId?: string; question: string; answer: string }[];
 }
-
-export const getApplicantEmail = (app: ApplicationRecord) =>
-  app.answers.find((a) => a.questionId === "email")?.answer || app.applicationEmail || "—";
 
 interface ApplicationDetailProps {
   application: ApplicationRecord;
@@ -78,70 +82,101 @@ const ApplicationDetail = ({
     }
   };
 
-  const handleCopyAll = () => {
-    const questionsText = application.answers
-      .map((a) => `Q: ${a.question}\nA: ${a.answer}`)
-      .join("\n\n");
+  const resumeDownloadUrl = application.resumeFileName
+    ? `/getResume?file=${application.resumeFileName}`
+    : application.resumeUrl || null;
 
+  const handleCopyAll = () => {
     const text = `Position: ${application.title}
 Type: ${application.type}
 Location: ${application.location}
-Email: ${getApplicantEmail(application)}
+
+Name: ${application.fullName || "—"}
+Email: ${application.email || "—"}
+Phone: ${application.phone || "—"}
+Years of Experience: ${application.yearsExperience || "—"}
+Current Role: ${application.currentRole || "—"}
+Current Company: ${application.currentCompany || "—"}
+LinkedIn: ${application.linkedin || "—"}
+Notice Period: ${application.noticePeriod || "—"} weeks
+
 Status: ${application.status}
 Submitted: ${new Date(application.submittedAt).toLocaleDateString()}
-
-Questions:
-${questionsText}
-
-Resume: ${application.resumeUrl || "N/A"}`;
+Resume: ${resumeDownloadUrl ? window.location.origin + resumeDownloadUrl : "N/A"}`;
 
     navigator.clipboard.writeText(text);
     toast({ title: "Copied to clipboard" });
   };
 
+  const fields = [
+    { label: "Full Name", value: application.fullName },
+    { label: "Email", value: application.email },
+    { label: "Phone", value: application.phone },
+    { label: "Years of Experience", value: application.yearsExperience },
+    { label: "Current Role", value: application.currentRole },
+    { label: "Current Company", value: application.currentCompany },
+    {
+      label: "LinkedIn",
+      value: application.linkedin,
+      isLink: true,
+    },
+    { label: "Notice Period", value: application.noticePeriod ? `${application.noticePeriod} weeks` : undefined },
+  ];
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{application.title}</DialogTitle>
+          <DialogTitle>{application.fullName || application.title}</DialogTitle>
+          <p className="text-sm text-muted-foreground">{application.title} &middot; {application.location}</p>
         </DialogHeader>
 
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4 text-sm">
+            {fields.map((f) => (
+              <div key={f.label}>
+                <span className="font-medium text-muted-foreground">
+                  {f.label}
+                </span>
+                {f.isLink && f.value ? (
+                  <p>
+                    <a
+                      href={f.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline break-all"
+                    >
+                      {f.value}
+                    </a>
+                  </p>
+                ) : (
+                  <p>{f.value || "—"}</p>
+                )}
+              </div>
+            ))}
             <div>
-              <span className="font-medium text-muted-foreground">Type</span>
-              <p>{application.type}</p>
-            </div>
-            <div>
-              <span className="font-medium text-muted-foreground">Location</span>
-              <p>{application.location}</p>
-            </div>
-            <div>
-              <span className="font-medium text-muted-foreground">Email</span>
-              <p>{getApplicantEmail(application)}</p>
-            </div>
-            <div>
-              <span className="font-medium text-muted-foreground">Submitted</span>
-              <p>{new Date(application.submittedAt).toLocaleDateString()}</p>
+              <span className="font-medium text-muted-foreground">
+                Submitted
+              </span>
+              <p>
+                {new Date(application.submittedAt).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </p>
             </div>
             <div>
               <span className="font-medium text-muted-foreground">Status</span>
-              <Badge variant="outline" className={statusColors[application.status] || ""}>
-                {application.status}
-              </Badge>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="font-semibold">Answers</h3>
-            {application.answers.map((a, i) => (
-              <div key={i} className="rounded-md border p-3">
-                <p className="text-sm font-medium text-muted-foreground">
-                  {a.question}
-                </p>
-                <p className="mt-1 text-sm">{a.answer}</p>
+              <div className="mt-1">
+                <Badge
+                  variant="outline"
+                  className={statusColors[application.status] || ""}
+                >
+                  {application.status}
+                </Badge>
               </div>
-            ))}
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -160,9 +195,9 @@ Resume: ${application.resumeUrl || "N/A"}`;
               </SelectContent>
             </Select>
 
-            {application.resumeUrl && (
+            {resumeDownloadUrl && (
               <Button variant="outline" size="sm" asChild>
-                <a href={application.resumeUrl} download>
+                <a href={resumeDownloadUrl} download>
                   <Download className="mr-1 h-4 w-4" />
                   Resume
                 </a>

@@ -32,20 +32,10 @@ import { Download, Trash2, ChevronDown, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ApplicationDetail, {
   type ApplicationRecord,
-  getApplicantEmail,
 } from "./ApplicationDetail";
-import jobsData from "@/data/jobs.json";
 
 interface AdminDashboardProps {
   password: string;
-}
-
-// Lightweight summary from KV metadata
-interface AppSummary {
-  id: string;
-  jobId: string;
-  status: string;
-  submittedAt: string;
 }
 
 const statusColors: Record<string, string> = {
@@ -55,32 +45,27 @@ const statusColors: Record<string, string> = {
   rejected: "bg-red-100 text-red-800 hover:bg-red-100",
 };
 
-const jobTitleMap: Record<string, string> = {};
-for (const job of jobsData.jobs) {
-  jobTitleMap[job.id] = job.title;
-}
-
 const AdminDashboard = ({ password }: AdminDashboardProps) => {
-  const [summaries, setSummaries] = useState<AppSummary[]>([]);
+  const [applications, setApplications] = useState<ApplicationRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedApp, setSelectedApp] = useState<ApplicationRecord | null>(
     null
   );
-  const [loadingDetail, setLoadingDetail] = useState(false);
   const { toast } = useToast();
 
   const authHeaders = { "X-Admin-Password": password };
 
   useEffect(() => {
-    const fetchSummaries = async () => {
+    const fetchApplications = async () => {
       try {
         const res = await fetch("/api/admin/applications", {
           headers: authHeaders,
         });
         if (res.ok) {
           const data = await res.json();
-          setSummaries(data);
+          setApplications(data);
         }
       } catch {
         toast({
@@ -91,51 +76,42 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
         setIsLoading(false);
       }
     };
-    fetchSummaries();
+    fetchApplications();
   }, []);
 
   const filtered = useMemo(() => {
-    return summaries.filter((app) => {
+    return applications.filter((app) => {
       if (statusFilter !== "all" && app.status !== statusFilter) return false;
+      if (search) {
+        const term = search.toLowerCase();
+        const searchFields = [
+          app.fullName,
+          app.email,
+          app.phone,
+          app.currentRole,
+          app.currentCompany,
+        ];
+        return searchFields.some(
+          (f) => f && f.toLowerCase().includes(term)
+        );
+      }
       return true;
     });
-  }, [summaries, statusFilter]);
+  }, [applications, search, statusFilter]);
 
   const grouped = useMemo(() => {
     const groups: Record<
       string,
-      { title: string; apps: AppSummary[] }
+      { title: string; apps: ApplicationRecord[] }
     > = {};
     for (const app of filtered) {
       if (!groups[app.jobId]) {
-        groups[app.jobId] = {
-          title: jobTitleMap[app.jobId] || app.jobId,
-          apps: [],
-        };
+        groups[app.jobId] = { title: app.title, apps: [] };
       }
       groups[app.jobId].apps.push(app);
     }
     return groups;
   }, [filtered]);
-
-  const handleViewDetail = async (appId: string) => {
-    setLoadingDetail(true);
-    try {
-      const res = await fetch(`/api/admin/applications/${appId}`, {
-        headers: authHeaders,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setSelectedApp(data);
-      } else {
-        toast({ title: "Failed to load application", variant: "destructive" });
-      }
-    } catch {
-      toast({ title: "Failed to load application", variant: "destructive" });
-    } finally {
-      setLoadingDetail(false);
-    }
-  };
 
   const handleExportCSV = async (jobId: string) => {
     try {
@@ -163,7 +139,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
         headers: authHeaders,
       });
       if (res.ok) {
-        setSummaries((prev) => prev.filter((a) => a.id !== id));
+        setApplications((prev) => prev.filter((a) => a.id !== id));
         toast({ title: "Application deleted" });
       } else {
         toast({ title: "Failed to delete", variant: "destructive" });
@@ -174,12 +150,19 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
   };
 
   const handleStatusChange = (id: string, status: string) => {
-    setSummaries((prev) =>
+    setApplications((prev) =>
       prev.map((a) => (a.id === id ? { ...a, status } : a))
     );
     if (selectedApp?.id === id) {
       setSelectedApp((prev) => (prev ? { ...prev, status } : null));
     }
+  };
+
+  const getResumeDownloadUrl = (app: ApplicationRecord) => {
+    if (app.resumeFileName) {
+      return `/getResume?file=${app.resumeFileName}`;
+    }
+    return app.resumeUrl || null;
   };
 
   if (isLoading) {
@@ -197,6 +180,18 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
       <h1 className="font-serif text-3xl font-bold tracking-tight">
         Applications Dashboard
       </h1>
+
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search by name, email..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+      </div>
 
       <Tabs value={statusFilter} onValueChange={setStatusFilter}>
         <TabsList>
@@ -250,72 +245,114 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                     <Table>
                       <TableHeader>
                         <TableRow>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Phone</TableHead>
+                          <TableHead>Experience</TableHead>
+                          <TableHead>Current Role</TableHead>
                           <TableHead>Date</TableHead>
                           <TableHead>Status</TableHead>
+                          <TableHead>Resume</TableHead>
                           <TableHead className="w-12"></TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {group.apps.map((app) => (
-                          <TableRow
-                            key={app.id}
-                            className="cursor-pointer"
-                            onClick={() => handleViewDetail(app.id)}
-                          >
-                            <TableCell>
-                              {new Date(
-                                app.submittedAt
-                              ).toLocaleDateString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              })}
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                variant="outline"
-                                className={statusColors[app.status] || ""}
-                              >
-                                {app.status}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
+                        {group.apps.map((app) => {
+                          const resumeUrl = getResumeDownloadUrl(app);
+                          return (
+                            <TableRow
+                              key={app.id}
+                              className="cursor-pointer"
+                              onClick={() => setSelectedApp(app)}
+                            >
+                              <TableCell className="font-medium">
+                                {app.fullName || "—"}
+                              </TableCell>
+                              <TableCell>
+                                {app.email || "—"}
+                              </TableCell>
+                              <TableCell>
+                                {app.phone || "—"}
+                              </TableCell>
+                              <TableCell>
+                                {app.yearsExperience ? `${app.yearsExperience} yrs` : "—"}
+                              </TableCell>
+                              <TableCell>
+                                {app.currentRole || "—"}
+                              </TableCell>
+                              <TableCell className="whitespace-nowrap">
+                                {new Date(
+                                  app.submittedAt
+                                ).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </TableCell>
+                              <TableCell>
+                                <Badge
+                                  variant="outline"
+                                  className={
+                                    statusColors[app.status] || ""
+                                  }
+                                >
+                                  {app.status}
+                                </Badge>
+                              </TableCell>
+                              <TableCell>
+                                {resumeUrl ? (
                                   <Button
                                     variant="ghost"
                                     size="sm"
+                                    asChild
                                     onClick={(e) => e.stopPropagation()}
                                   >
-                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                    <a href={resumeUrl} download>
+                                      <Download className="h-4 w-4" />
+                                    </a>
                                   </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                      Delete application?
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      This action cannot be undone. This
-                                      will permanently delete this
-                                      application.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                      Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction
-                                      onClick={() => handleDelete(app.id)}
+                                ) : (
+                                  <span className="text-muted-foreground text-sm">
+                                    —
+                                  </span>
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={(e) => e.stopPropagation()}
                                     >
-                                      Delete
-                                    </AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                                      <Trash2 className="h-4 w-4 text-destructive" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>
+                                        Delete application?
+                                      </AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        This action cannot be undone.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>
+                                        Cancel
+                                      </AlertDialogCancel>
+                                      <AlertDialogAction
+                                        onClick={() => handleDelete(app.id)}
+                                      >
+                                        Delete
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   </div>

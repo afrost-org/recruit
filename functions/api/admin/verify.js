@@ -12,7 +12,8 @@ export async function onRequestPost(context) {
   try {
     const { request, env } = context;
     const password = request.headers.get('X-Admin-Password');
-    const storedPassword = await env.KV.get('config:admin_password');
+    const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
+    const storedPassword = row?.value;
 
     if (!password || !storedPassword || password !== storedPassword) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {

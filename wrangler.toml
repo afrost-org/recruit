@@ -18,5 +18,10 @@ id = "1c14adb59ccb4ee2bbd15a7822a54f0b"
 binding = "R2"
 bucket_name = "resumes"
 
+[[d1_databases]]
+binding = "DB"
+database_name = "recruit"
+database_id = "a531deef-b8f6-4bf5-a24f-469efc7945b8"
+
 
 

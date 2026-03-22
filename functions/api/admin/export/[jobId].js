@@ -6,7 +6,8 @@ const corsHeaders = {
 
 async function checkAuth(request, env) {
   const password = request.headers.get('X-Admin-Password');
-  const storedPassword = await env.KV.get('config:admin_password');
+  const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
+  const storedPassword = row?.value;
   if (!password || !storedPassword || password !== storedPassword) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
@@ -39,64 +40,30 @@ export async function onRequestGet(context) {
 
     const baseUrl = new URL(request.url).origin;
 
-    // Get all application IDs for this job
-    const listResult = await env.KV.list({ prefix: `job:${jobId}:application:` });
-
-    const applications = [];
-    for (const key of listResult.keys) {
-      // The value stored is the application ID
-      const applicationId = await env.KV.get(key.name);
-      if (applicationId) {
-        const value = await env.KV.get(`application:${applicationId}`);
-        if (value) {
-          try {
-            applications.push(JSON.parse(value));
-          } catch (e) {
-            console.error(`Failed to parse application ${applicationId}:`, e);
-          }
-        }
-      }
-    }
-
-    // Sort by submittedAt descending
-    applications.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
-
-    // Collect all unique question labels across all applications
-    const questionColumns = [];
-    const seenQuestions = new Set();
-    for (const app of applications) {
-      if (app.answers && Array.isArray(app.answers)) {
-        for (const answer of app.answers) {
-          if (!seenQuestions.has(answer.question)) {
-            seenQuestions.add(answer.question);
-            questionColumns.push(answer.question);
-          }
-        }
-      }
-    }
+    const { results } = await env.DB.prepare('SELECT * FROM applications WHERE job_id = ? ORDER BY submitted_at DESC').bind(jobId).all();
 
     // Build CSV header
-    const headers = ['Application ID', 'Submitted At', 'Status', ...questionColumns, 'Resume URL'];
+    const headers = ['Application ID', 'Full Name', 'Email', 'Phone', 'Years Experience', 'Current Role', 'Current Company', 'LinkedIn', 'Notice Period', 'Submitted At', 'Status', 'Resume URL'];
     const rows = [headers.map(escapeCsvField).join(',')];
 
     // Build CSV rows
-    for (const app of applications) {
-      const answerMap = {};
-      if (app.answers && Array.isArray(app.answers)) {
-        for (const answer of app.answers) {
-          answerMap[answer.question] = answer.answer;
-        }
-      }
-
-      const resumeUrl = app.resumeFileName
-        ? `${baseUrl}/getResume?file=${app.resumeFileName}`
+    for (const app of results) {
+      const resumeUrl = app.resume_file_name
+        ? `${baseUrl}/getResume?file=${app.resume_file_name}`
         : '';
 
       const row = [
         app.id,
-        app.submittedAt,
+        app.full_name,
+        app.email,
+        app.phone,
+        app.years_experience,
+        app.current_role,
+        app.current_company,
+        app.linkedin,
+        app.notice_period,
+        app.submitted_at,
         app.status,
-        ...questionColumns.map(q => answerMap[q] || ''),
         resumeUrl,
       ];
 

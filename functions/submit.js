@@ -1,32 +1,14 @@
 /**
- * @typedef {Object} ApplicationAnswer
- * @property {string} questionId
- * @property {string} question
- * @property {string} answer
- */
-
-/**
- * @typedef {Object} JobApplication
- * @property {string} jobId
- * @property {string} title
- * @property {string} company
- * @property {string} type
- * @property {string} location
- * @property {string} applicationEmail
- * @property {ApplicationAnswer[]} answers
- */
-
-/**
  * Handle job application submissions with file upload
  * @param {Request} request
- * @param {Object} env - Contains KV and R2 bindings
+ * @param {Object} env - Contains DB and R2 bindings
  * @param {Object} ctx
  * @returns {Promise<Response>}
  */
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
-    
+
     // Check if the request is multipart/form-data
     const contentType = request.headers.get('content-type') || '';
     if (!contentType.includes('multipart/form-data')) {
@@ -37,7 +19,7 @@ export async function onRequestPost(context) {
 
     // Get the form data
     const formData = await request.formData();
-    
+
     // Get the resume file
     const resumeFile = formData.get('resume');
     if (!resumeFile) {
@@ -100,6 +82,12 @@ export async function onRequestPost(context) {
       });
     }
 
+    // Extract individual fields from the answers array by questionId
+    const answerMap = {};
+    for (const a of applicationData.answers) {
+      answerMap[a.questionId] = a.answer;
+    }
+
     // Generate unique IDs
     const applicationId = crypto.randomUUID();
     const timestamp = new Date().toISOString();
@@ -124,78 +112,51 @@ export async function onRequestPost(context) {
 
     // Construct the public R2 URL
     const resumeUrl = `${env.R2_PUBLIC_URL}/${resumeFileName}`;
+    const jobUrl = `${new URL(request.url).origin}/jobs/${applicationData.jobId}`;
 
-    // Prepare application data for KV
-    const applicationRecord = {
-      id: applicationId,
+    // Store in D1
+    await env.DB.prepare(
+      'INSERT INTO applications (id, job_id, title, company, type, location, application_email, full_name, email, phone, years_experience, current_role, current_company, linkedin, notice_period, resume_file_name, resume_type, resume_url, job_url, submitted_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ).bind(
+      applicationId,
+      applicationData.jobId,
+      applicationData.title,
+      applicationData.company,
+      applicationData.type || null,
+      applicationData.location || null,
+      applicationData.applicationEmail || null,
+      answerMap.full_name || null,
+      answerMap.email || null,
+      answerMap.phone || null,
+      answerMap.years_experience || null,
+      answerMap.current_role || null,
+      answerMap.current_company || null,
+      answerMap.linkedin || null,
+      answerMap.notice_period || null,
+      resumeFileName,
+      resumeFile.type,
+      resumeUrl,
+      jobUrl,
+      timestamp,
+      'new'
+    ).run();
+
+    // TODO: Re-enable Telegram notifications once bot is configured
+    // Requires TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars
+
+    // Return success response
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Application submitted successfully',
+      applicationId: applicationId,
       jobId: applicationData.jobId,
-      title: applicationData.title,
-      company: applicationData.company,
-      type: applicationData.type,
-      location: applicationData.location,
-      applicationEmail: applicationData.applicationEmail,
-      answers: applicationData.answers,
-      resumeFileName: resumeFileName,
-      resumeType: resumeFile.type,
-      resumeUrl: resumeUrl,
-      jobUrl: `${new URL(request.url).origin}/jobs/${applicationData.jobId}`,
-      submittedAt: timestamp,
-      status: 'new'
-    };
-
-    // Store in KV namespace
-    try {
-      await env.KV.put(
-        `application:${applicationId}`,
-        JSON.stringify(applicationRecord),
-        {
-          metadata: {
-            jobId: applicationData.jobId,
-            status: 'new',
-            submittedAt: timestamp
-          }
-        }
-      );
-
-      // Also store a job-specific index
-      await env.KV.put(
-        `job:${applicationData.jobId}:application:${applicationId}`,
-        applicationId,
-        {
-          metadata: {
-            status: 'new',
-            submittedAt: timestamp
-          }
-        }
-      );
-
-      // TODO: Re-enable Telegram notifications once bot is configured
-      // Requires TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars
-
-      // Return success response
-      return new Response(JSON.stringify({
-        success: true,
-        message: 'Application submitted successfully',
-        applicationId: applicationId,
-        jobId: applicationData.jobId,
-        resumeUrl: resumeUrl
-      }), {
-        status: 201,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-    } catch (error) {
-      console.error('Error storing in KV:', error);
-      // Try to cleanup R2 file if KV storage fails
-      try {
-        await env.R2.delete(resumeFileName);
-      } catch (cleanupError) {
-        console.error('Error cleaning up R2 file:', cleanupError);
-      }
-      return new Response('Failed to store application data', { status: 500 });
-    }
+      resumeUrl: resumeUrl
+    }), {
+      status: 201,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
   } catch (err) {
     console.error('Error processing job application:', err);
@@ -209,4 +170,4 @@ export async function onRequestPost(context) {
       },
     });
   }
-} 
+}

@@ -4,9 +4,36 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
 };
 
+function rowToCamelCase(row) {
+  return {
+    id: row.id,
+    jobId: row.job_id,
+    title: row.title,
+    company: row.company,
+    type: row.type,
+    location: row.location,
+    applicationEmail: row.application_email,
+    fullName: row.full_name,
+    email: row.email,
+    phone: row.phone,
+    yearsExperience: row.years_experience,
+    currentRole: row.current_role,
+    currentCompany: row.current_company,
+    linkedin: row.linkedin,
+    noticePeriod: row.notice_period,
+    resumeFileName: row.resume_file_name,
+    resumeType: row.resume_type,
+    resumeUrl: row.resume_url,
+    jobUrl: row.job_url,
+    submittedAt: row.submitted_at,
+    status: row.status,
+  };
+}
+
 async function checkAuth(request, env) {
   const password = request.headers.get('X-Admin-Password');
-  const storedPassword = await env.KV.get('config:admin_password');
+  const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
+  const storedPassword = row?.value;
   if (!password || !storedPassword || password !== storedPassword) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
@@ -28,15 +55,15 @@ export async function onRequestGet(context) {
     const authError = await checkAuth(request, env);
     if (authError) return authError;
 
-    const value = await env.KV.get(`application:${id}`);
-    if (!value) {
+    const row = await env.DB.prepare('SELECT * FROM applications WHERE id = ?').bind(id).first();
+    if (!row) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
-    return new Response(value, {
+    return new Response(JSON.stringify(rowToCamelCase(row)), {
       status: 200,
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
@@ -57,15 +84,14 @@ export async function onRequestPatch(context) {
     const authError = await checkAuth(request, env);
     if (authError) return authError;
 
-    const value = await env.KV.get(`application:${id}`);
-    if (!value) {
+    const existing = await env.DB.prepare('SELECT * FROM applications WHERE id = ?').bind(id).first();
+    if (!existing) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
-    const record = JSON.parse(value);
     const body = await request.json();
 
     if (!body.status) {
@@ -75,34 +101,10 @@ export async function onRequestPatch(context) {
       });
     }
 
-    record.status = body.status;
+    await env.DB.prepare('UPDATE applications SET status = ? WHERE id = ?').bind(body.status, id).run();
 
-    // Update the main application record
-    await env.KV.put(
-      `application:${id}`,
-      JSON.stringify(record),
-      {
-        metadata: {
-          jobId: record.jobId,
-          status: record.status,
-          submittedAt: record.submittedAt,
-        },
-      }
-    );
-
-    // Update metadata on the job-specific index key
-    await env.KV.put(
-      `job:${record.jobId}:application:${id}`,
-      id,
-      {
-        metadata: {
-          status: record.status,
-          submittedAt: record.submittedAt,
-        },
-      }
-    );
-
-    return new Response(JSON.stringify(record), {
+    const updated = { ...existing, status: body.status };
+    return new Response(JSON.stringify(rowToCamelCase(updated)), {
       status: 200,
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
@@ -123,26 +125,20 @@ export async function onRequestDelete(context) {
     const authError = await checkAuth(request, env);
     if (authError) return authError;
 
-    const value = await env.KV.get(`application:${id}`);
-    if (!value) {
+    const row = await env.DB.prepare('SELECT resume_file_name FROM applications WHERE id = ?').bind(id).first();
+    if (!row) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
-    const record = JSON.parse(value);
-
-    // Delete the main application record
-    await env.KV.delete(`application:${id}`);
-
-    // Delete the job-specific index key
-    await env.KV.delete(`job:${record.jobId}:application:${id}`);
+    await env.DB.prepare('DELETE FROM applications WHERE id = ?').bind(id).run();
 
     // Delete the resume from R2
-    if (record.resumeFileName) {
+    if (row.resume_file_name) {
       try {
-        await env.R2.delete(record.resumeFileName);
+        await env.R2.delete(row.resume_file_name);
       } catch (r2Error) {
         console.error('Error deleting resume from R2:', r2Error);
       }
