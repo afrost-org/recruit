@@ -184,7 +184,7 @@ Resume: ${resumeDownloadUrl ? window.location.origin + resumeDownloadUrl : "N/A"
               value={application.status}
               onValueChange={handleStatusChange}
             >
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="w-40 bg-secondary">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
