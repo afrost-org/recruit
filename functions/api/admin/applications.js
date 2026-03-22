@@ -27,16 +27,27 @@ export async function onRequestGet(context) {
     const authError = await checkAuth(request, env);
     if (authError) return authError;
 
-    const listResult = await env.KV.list({ prefix: 'application:' });
+    // Fetch all application keys (handle pagination)
+    let allKeys = [];
+    let cursor = undefined;
+    do {
+      const listResult = await env.KV.list({ prefix: 'application:', cursor });
+      allKeys = allKeys.concat(listResult.keys);
+      cursor = listResult.list_complete ? undefined : listResult.cursor;
+    } while (cursor);
+
+    // Fetch all records in parallel
+    const results = await Promise.all(
+      allKeys.map((key) => env.KV.get(key.name))
+    );
 
     const applications = [];
-    for (const key of listResult.keys) {
-      const value = await env.KV.get(key.name);
+    for (const value of results) {
       if (value) {
         try {
           applications.push(JSON.parse(value));
         } catch (e) {
-          console.error(`Failed to parse application ${key.name}:`, e);
+          console.error('Failed to parse application:', e);
         }
       }
     }
