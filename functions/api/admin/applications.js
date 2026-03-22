@@ -27,7 +27,7 @@ export async function onRequestGet(context) {
     const authError = await checkAuth(request, env);
     if (authError) return authError;
 
-    // Fetch all application keys (handle pagination)
+    // List all application keys — metadata has jobId, status, submittedAt
     let allKeys = [];
     let cursor = undefined;
     do {
@@ -36,24 +36,16 @@ export async function onRequestGet(context) {
       cursor = listResult.list_complete ? undefined : listResult.cursor;
     } while (cursor);
 
-    // Fetch all records in parallel
-    const results = await Promise.all(
-      allKeys.map((key) => env.KV.get(key.name))
-    );
-
-    const applications = [];
-    for (const value of results) {
-      if (value) {
-        try {
-          applications.push(JSON.parse(value));
-        } catch (e) {
-          console.error('Failed to parse application:', e);
-        }
-      }
-    }
-
-    // Sort by submittedAt descending
-    applications.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    // Return lightweight summaries from metadata (no full record fetches)
+    const applications = allKeys
+      .filter((key) => key.metadata)
+      .map((key) => ({
+        id: key.name.replace('application:', ''),
+        jobId: key.metadata.jobId,
+        status: key.metadata.status,
+        submittedAt: key.metadata.submittedAt,
+      }))
+      .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
     return new Response(JSON.stringify(applications), {
       status: 200,
