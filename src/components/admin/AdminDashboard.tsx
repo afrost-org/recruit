@@ -338,11 +338,17 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                                       </AlertDialogDescription>
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
-                                      <AlertDialogCancel>
+                                      <AlertDialogCancel
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
                                         Cancel
                                       </AlertDialogCancel>
                                       <AlertDialogAction
-                                        onClick={() => handleDelete(app.id)}
+                                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleDelete(app.id);
+                                        }}
                                       >
                                         Delete
                                       </AlertDialogAction>
