@@ -1,29 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 
+const STORAGE_KEY = "admin_password";
+
 const AdminPage = () => {
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleLogin = async () => {
+  // Check localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      verifyPassword(stored);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const verifyPassword = async (pw: string) => {
     setIsLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/applications", {
-        headers: { "X-Admin-Password": password },
+      const res = await fetch("/api/admin/verify", {
+        method: "POST",
+        headers: { "X-Admin-Password": pw },
       });
-      if (res.status === 401) {
-        setError("Invalid password");
-      } else if (res.ok) {
+      if (res.ok) {
+        localStorage.setItem(STORAGE_KEY, pw);
+        setPassword(pw);
         setAuthenticated(true);
       } else {
-        setError("Something went wrong");
+        localStorage.removeItem(STORAGE_KEY);
+        setError("Invalid password");
       }
     } catch {
       setError("Failed to connect to server");
@@ -31,6 +45,16 @@ const AdminPage = () => {
       setIsLoading(false);
     }
   };
+
+  const handleLogin = () => verifyPassword(password);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted-foreground">Verifying...</p>
+      </div>
+    );
+  }
 
   if (authenticated) {
     return <AdminDashboard password={password} />;
