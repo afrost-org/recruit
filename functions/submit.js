@@ -169,46 +169,8 @@ export async function onRequestPost(context) {
         }
       );
 
-      // Send notification to Telegram
-      try {
-        const botToken = env.TELEGRAM_BOT_TOKEN;
-        const chatId = env.TELEGRAM_CHAT_ID;
-        const baseUrl = new URL(request.url).origin;
-
-        // Create answers section
-        const answersText = applicationRecord.answers
-          .map(a => `<b>${a.question}:</b> ${a.answer}`)
-          .join('\n');
-
-        // Create getResume URL using request origin
-        const resumeDownloadUrl = `${baseUrl}/getResume?file=${resumeFileName}`;
-
-        const text = `🎉 <b>New Job Application Received!</b>\n\n` +
-              `<b>Position:</b> ${applicationRecord.title}\n` +
-              `<b>Type:</b> ${applicationRecord.type}\n` +
-              `<b>Location:</b> ${applicationRecord.location}\n` +
-              `🔗 <a href="${baseUrl}/jobs/${applicationData.jobId}">Job Post</a>\n\n` +
-              `📝 <b>Application Details:</b>\n${answersText}\n\n` +
-              `📎 <a href="${resumeDownloadUrl}">Download Resume</a>\n\n` +
-              `🆔 Application ID: <code>${applicationId}</code>\n` +
-              `⏰ Submitted: ${timestamp}`;
-
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: text,
-            parse_mode: 'HTML',
-            disable_web_page_preview: true,
-          })
-        });
-      } catch (notificationError) {
-        // Log the error but don't fail the request
-        console.error('Failed to send Telegram notification:', notificationError);
-      }
+      // TODO: Re-enable Telegram notifications once bot is configured
+      // Requires TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars
 
       // Return success response
       return new Response(JSON.stringify({
