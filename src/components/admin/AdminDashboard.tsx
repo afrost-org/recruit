@@ -28,7 +28,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Download, Trash2, ChevronDown, Search, Archive } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Download, Trash2, ChevronDown, Search, Archive, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import JSZip from "jszip";
 import { useToast } from "@/hooks/use-toast";
 import ApplicationDetail, {
@@ -38,6 +45,9 @@ import ApplicationDetail, {
 interface AdminDashboardProps {
   password: string;
 }
+
+type SortField = "fullName" | "email" | "yearsExperience" | "currentRole" | "submittedAt" | "status";
+type SortDirection = "asc" | "desc";
 
 const statusColors: Record<string, string> = {
   new: "bg-blue-100 text-blue-800 hover:bg-blue-100",
@@ -54,7 +64,25 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
   const [selectedApp, setSelectedApp] = useState<ApplicationRecord | null>(
     null
   );
+  const [sortField, setSortField] = useState<SortField>("submittedAt");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const { toast } = useToast();
+
+  const toggleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortField(field);
+      setSortDirection(field === "submittedAt" ? "desc" : "asc");
+    }
+  };
+
+  const SortIcon = ({ field }: { field: SortField }) => {
+    if (sortField !== field) return <ArrowUpDown className="ml-1 h-3 w-3 opacity-50" />;
+    return sortDirection === "asc"
+      ? <ArrowUp className="ml-1 h-3 w-3" />
+      : <ArrowDown className="ml-1 h-3 w-3" />;
+  };
 
   const authHeaders = { "X-Admin-Password": password };
 
@@ -111,8 +139,29 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
       }
       groups[app.jobId].apps.push(app);
     }
+    // Sort each group's apps
+    const compare = (a: ApplicationRecord, b: ApplicationRecord) => {
+      let aVal: string | number = "";
+      let bVal: string | number = "";
+      if (sortField === "submittedAt") {
+        aVal = new Date(a.submittedAt).getTime();
+        bVal = new Date(b.submittedAt).getTime();
+      } else if (sortField === "yearsExperience") {
+        aVal = parseFloat(a.yearsExperience || "0") || 0;
+        bVal = parseFloat(b.yearsExperience || "0") || 0;
+      } else {
+        aVal = (a[sortField] || "").toLowerCase();
+        bVal = (b[sortField] || "").toLowerCase();
+      }
+      if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    };
+    for (const group of Object.values(groups)) {
+      group.apps.sort(compare);
+    }
     return groups;
-  }, [filtered]);
+  }, [filtered, sortField, sortDirection]);
 
   const handleExportCSV = async (jobId: string) => {
     try {
@@ -243,6 +292,29 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
             className="pl-9"
           />
         </div>
+        <div className="flex items-center gap-2 sm:hidden">
+          <Select
+            value={`${sortField}:${sortDirection}`}
+            onValueChange={(val) => {
+              const [f, d] = val.split(":") as [SortField, SortDirection];
+              setSortField(f);
+              setSortDirection(d);
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Sort by..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="submittedAt:desc">Newest first</SelectItem>
+              <SelectItem value="submittedAt:asc">Oldest first</SelectItem>
+              <SelectItem value="fullName:asc">Name A–Z</SelectItem>
+              <SelectItem value="fullName:desc">Name Z–A</SelectItem>
+              <SelectItem value="status:asc">Status A–Z</SelectItem>
+              <SelectItem value="yearsExperience:desc">Most experience</SelectItem>
+              <SelectItem value="yearsExperience:asc">Least experience</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <Tabs value={statusFilter} onValueChange={setStatusFilter}>
@@ -269,10 +341,10 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
             ).length;
             return (
               <Collapsible key={jobId} defaultOpen>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border p-4">
-                  <CollapsibleTrigger className="flex items-center gap-2 font-semibold text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border p-4 overflow-hidden">
+                  <CollapsibleTrigger className="flex items-center gap-2 font-semibold text-left min-w-0 overflow-hidden">
                     <ChevronDown className="h-4 w-4 shrink-0" />
-                    <span className="truncate">{group.title}</span>
+                    <span className="truncate min-w-0">{group.title}</span>
                     {newCount > 0 && (
                       <Badge
                         variant="outline"
@@ -395,13 +467,25 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Email</TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("fullName")}>
+                            <span className="flex items-center">Name<SortIcon field="fullName" /></span>
+                          </TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("email")}>
+                            <span className="flex items-center">Email<SortIcon field="email" /></span>
+                          </TableHead>
                           <TableHead>Phone</TableHead>
-                          <TableHead>Experience</TableHead>
-                          <TableHead>Current Role</TableHead>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Status</TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("yearsExperience")}>
+                            <span className="flex items-center">Experience<SortIcon field="yearsExperience" /></span>
+                          </TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("currentRole")}>
+                            <span className="flex items-center">Current Role<SortIcon field="currentRole" /></span>
+                          </TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("submittedAt")}>
+                            <span className="flex items-center">Date<SortIcon field="submittedAt" /></span>
+                          </TableHead>
+                          <TableHead className="cursor-pointer select-none" onClick={() => toggleSort("status")}>
+                            <span className="flex items-center">Status<SortIcon field="status" /></span>
+                          </TableHead>
                           <TableHead>Resume</TableHead>
                           <TableHead className="w-12"></TableHead>
                         </TableRow>
