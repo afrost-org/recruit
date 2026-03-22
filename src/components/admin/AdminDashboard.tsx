@@ -228,7 +228,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
   }
 
   return (
-    <div className="container py-8 space-y-6">
+    <div className="container px-4 py-8 space-y-6">
       <h1 className="font-serif text-3xl font-bold tracking-tight">
         Applications Dashboard
       </h1>
@@ -246,13 +246,15 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
       </div>
 
       <Tabs value={statusFilter} onValueChange={setStatusFilter}>
-        <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="new">New</TabsTrigger>
-          <TabsTrigger value="reviewed">Reviewed</TabsTrigger>
-          <TabsTrigger value="shortlisted">Shortlisted</TabsTrigger>
-          <TabsTrigger value="rejected">Rejected</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto w-full">
+          <TabsList>
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="new">New</TabsTrigger>
+            <TabsTrigger value="reviewed">Reviewed</TabsTrigger>
+            <TabsTrigger value="shortlisted">Shortlisted</TabsTrigger>
+            <TabsTrigger value="rejected">Rejected</TabsTrigger>
+          </TabsList>
+        </div>
       </Tabs>
 
       {Object.keys(grouped).length === 0 ? (
@@ -267,26 +269,27 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
             ).length;
             return (
               <Collapsible key={jobId} defaultOpen>
-                <div className="flex items-center justify-between rounded-lg border p-4">
-                  <CollapsibleTrigger className="flex items-center gap-2 font-semibold">
-                    <ChevronDown className="h-4 w-4" />
-                    {group.title}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border p-4">
+                  <CollapsibleTrigger className="flex items-center gap-2 font-semibold text-left">
+                    <ChevronDown className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{group.title}</span>
                     {newCount > 0 && (
                       <Badge
                         variant="outline"
-                        className="bg-blue-100 text-blue-800 hover:bg-blue-100 ml-2"
+                        className="bg-blue-100 text-blue-800 hover:bg-blue-100 ml-2 shrink-0"
                       >
                         {newCount} new
                       </Badge>
                     )}
-                    <span className="text-sm font-normal text-muted-foreground">
+                    <span className="text-sm font-normal text-muted-foreground shrink-0">
                       ({group.apps.length} total)
                     </span>
                   </CollapsibleTrigger>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full sm:w-auto">
                     <Button
                       variant="secondary"
                       size="sm"
+                      className="flex-1 sm:flex-initial"
                       onClick={() => handleExportCSV(jobId)}
                     >
                       <Download className="mr-1 h-4 w-4" />
@@ -295,6 +298,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                     <Button
                       variant="secondary"
                       size="sm"
+                      className="flex-1 sm:flex-initial"
                       disabled={exportingJobs[jobId]}
                       onClick={() => handleExportBundle(jobId, group.apps)}
                     >
@@ -304,7 +308,90 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                   </div>
                 </div>
                 <CollapsibleContent>
-                  <div className="rounded-b-lg border border-t-0">
+                  {/* Mobile card layout */}
+                  <div className="sm:hidden space-y-3 p-3 border border-t-0 rounded-b-lg">
+                    {group.apps.map((app) => {
+                      const resumeUrl = getResumeDownloadUrl(app);
+                      return (
+                        <div
+                          key={app.id}
+                          className="rounded-lg border p-4 space-y-2 cursor-pointer active:bg-muted/50"
+                          onClick={() => setSelectedApp(app)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{app.fullName || "—"}</span>
+                            <Badge
+                              variant="outline"
+                              className={statusColors[app.status] || ""}
+                            >
+                              {app.status}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{app.email || "—"}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(app.submittedAt).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </p>
+                          <div className="flex gap-2 pt-1">
+                            {resumeUrl && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                asChild
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <a href={resumeUrl} download>
+                                  <Download className="mr-1 h-4 w-4" />
+                                  Resume
+                                </a>
+                              </Button>
+                            )}
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete application?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This action cannot be undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel
+                                    className="border-input bg-secondary hover:bg-secondary/80"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    Cancel
+                                  </AlertDialogCancel>
+                                  <AlertDialogAction
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(app.id);
+                                    }}
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Desktop table layout */}
+                  <div className="hidden sm:block rounded-b-lg border border-t-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
