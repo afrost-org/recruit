@@ -28,7 +28,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Download, Trash2, ChevronDown, Search } from "lucide-react";
+import { Download, Trash2, ChevronDown, Search, Archive } from "lucide-react";
+import JSZip from "jszip";
 import { useToast } from "@/hooks/use-toast";
 import ApplicationDetail, {
   type ApplicationRecord,
@@ -132,6 +133,57 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
     }
   };
 
+  const [exportingJobs, setExportingJobs] = useState<Record<string, boolean>>({});
+
+  const handleExportBundle = async (jobId: string, apps: ApplicationRecord[]) => {
+    setExportingJobs((prev) => ({ ...prev, [jobId]: true }));
+    try {
+      const zip = new JSZip();
+
+      // Fetch CSV
+      const csvRes = await fetch(`/api/admin/export/${jobId}`, {
+        headers: authHeaders,
+      });
+      if (csvRes.ok) {
+        const csvBlob = await csvRes.blob();
+        zip.file(`applications-${jobId}.csv`, csvBlob);
+      }
+
+      // Fetch all resumes in parallel
+      const resumePromises = apps
+        .filter((app) => app.resumeFileName)
+        .map(async (app) => {
+          try {
+            const res = await fetch(`/getResume?file=${app.resumeFileName}`);
+            if (res.ok) {
+              const blob = await res.blob();
+              const name = app.fullName
+                ? `${app.fullName.replace(/[^a-zA-Z0-9]/g, "_")}_${app.resumeFileName}`
+                : app.resumeFileName!;
+              zip.file(`resumes/${name}`, blob);
+            }
+          } catch {
+            // Skip failed downloads
+          }
+        });
+
+      await Promise.all(resumePromises);
+
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `applications-${jobId}-bundle.zip`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast({ title: "Bundle downloaded" });
+    } catch {
+      toast({ title: "Bundle export failed", variant: "destructive" });
+    } finally {
+      setExportingJobs((prev) => ({ ...prev, [jobId]: false }));
+    }
+  };
+
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch(`/api/admin/applications/${id}`, {
@@ -231,14 +283,25 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                       ({group.apps.length} total)
                     </span>
                   </CollapsibleTrigger>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handleExportCSV(jobId)}
-                  >
-                    <Download className="mr-1 h-4 w-4" />
-                    Export CSV
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handleExportCSV(jobId)}
+                    >
+                      <Download className="mr-1 h-4 w-4" />
+                      CSV
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      disabled={exportingJobs[jobId]}
+                      onClick={() => handleExportBundle(jobId, group.apps)}
+                    >
+                      <Archive className="mr-1 h-4 w-4" />
+                      {exportingJobs[jobId] ? "Bundling..." : "CSV + Resumes"}
+                    </Button>
+                  </div>
                 </div>
                 <CollapsibleContent>
                   <div className="rounded-b-lg border border-t-0">
