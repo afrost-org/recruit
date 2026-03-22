@@ -339,6 +339,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                                     </AlertDialogHeader>
                                     <AlertDialogFooter>
                                       <AlertDialogCancel
+                                        className="border-input bg-background hover:bg-accent hover:text-accent-foreground"
                                         onClick={(e) => e.stopPropagation()}
                                       >
                                         Cancel
