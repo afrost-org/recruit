@@ -4,9 +4,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
 };
 
-function checkAuth(request, env) {
+async function checkAuth(request, env) {
   const password = request.headers.get('X-Admin-Password');
-  if (!password || password !== env.ADMIN_PASSWORD) {
+  const storedPassword = await env.KV.get('config:admin_password');
+  if (!password || !storedPassword || password !== storedPassword) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
@@ -33,7 +34,7 @@ export async function onRequestGet(context) {
     const { request, env, params } = context;
     const { jobId } = params;
 
-    const authError = checkAuth(request, env);
+    const authError = await checkAuth(request, env);
     if (authError) return authError;
 
     const baseUrl = new URL(request.url).origin;
