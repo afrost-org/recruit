@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -34,7 +34,6 @@ import ApplicationDetail, {
   type ApplicationRecord,
   getApplicantEmail,
 } from "./ApplicationDetail";
-import jobsData from "@/data/jobs.json";
 
 interface AdminDashboardProps {
   password: string;
@@ -48,11 +47,8 @@ const statusColors: Record<string, string> = {
 };
 
 const AdminDashboard = ({ password }: AdminDashboardProps) => {
-  const [applicationsByJob, setApplicationsByJob] = useState<
-    Record<string, ApplicationRecord[]>
-  >({});
-  const [loadingJobs, setLoadingJobs] = useState<Record<string, boolean>>({});
-  const [loadedJobs, setLoadedJobs] = useState<Record<string, boolean>>({});
+  const [applications, setApplications] = useState<ApplicationRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedApp, setSelectedApp] = useState<ApplicationRecord | null>(
@@ -62,41 +58,30 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
 
   const authHeaders = { "X-Admin-Password": password };
 
-  const fetchJobApplications = useCallback(
-    async (jobId: string) => {
-      if (loadedJobs[jobId] || loadingJobs[jobId]) return;
-      setLoadingJobs((prev) => ({ ...prev, [jobId]: true }));
+  useEffect(() => {
+    const fetchApplications = async () => {
       try {
-        const res = await fetch(`/api/admin/applications-by-job/${jobId}`, {
+        const res = await fetch("/api/admin/applications", {
           headers: authHeaders,
         });
         if (res.ok) {
           const data = await res.json();
-          setApplicationsByJob((prev) => ({ ...prev, [jobId]: data }));
-          setLoadedJobs((prev) => ({ ...prev, [jobId]: true }));
+          setApplications(data);
         }
       } catch {
         toast({
-          title: `Failed to fetch applications for job`,
+          title: "Failed to fetch applications",
           variant: "destructive",
         });
       } finally {
-        setLoadingJobs((prev) => ({ ...prev, [jobId]: false }));
+        setIsLoading(false);
       }
-    },
-    [loadedJobs, loadingJobs]
-  );
-
-  // Auto-load first few jobs on mount
-  useEffect(() => {
-    jobsData.jobs.slice(0, 3).forEach((job) => {
-      fetchJobApplications(job.id);
-    });
+    };
+    fetchApplications();
   }, []);
 
-  const getFilteredApps = (jobId: string) => {
-    const apps = applicationsByJob[jobId] || [];
-    return apps.filter((app) => {
+  const filtered = useMemo(() => {
+    return applications.filter((app) => {
       if (statusFilter !== "all" && app.status !== statusFilter) return false;
       if (search) {
         const term = search.toLowerCase();
@@ -110,7 +95,21 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
       }
       return true;
     });
-  };
+  }, [applications, search, statusFilter]);
+
+  const grouped = useMemo(() => {
+    const groups: Record<
+      string,
+      { title: string; apps: ApplicationRecord[] }
+    > = {};
+    for (const app of filtered) {
+      if (!groups[app.jobId]) {
+        groups[app.jobId] = { title: app.title, apps: [] };
+      }
+      groups[app.jobId].apps.push(app);
+    }
+    return groups;
+  }, [filtered]);
 
   const handleExportCSV = async (jobId: string) => {
     try {
@@ -131,17 +130,14 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
     }
   };
 
-  const handleDelete = async (id: string, jobId: string) => {
+  const handleDelete = async (id: string) => {
     try {
       const res = await fetch(`/api/admin/applications/${id}`, {
         method: "DELETE",
         headers: authHeaders,
       });
       if (res.ok) {
-        setApplicationsByJob((prev) => ({
-          ...prev,
-          [jobId]: (prev[jobId] || []).filter((a) => a.id !== id),
-        }));
+        setApplications((prev) => prev.filter((a) => a.id !== id));
         toast({ title: "Application deleted" });
       } else {
         toast({ title: "Failed to delete", variant: "destructive" });
@@ -152,15 +148,9 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
   };
 
   const handleStatusChange = (id: string, status: string) => {
-    setApplicationsByJob((prev) => {
-      const updated = { ...prev };
-      for (const jobId in updated) {
-        updated[jobId] = updated[jobId].map((a) =>
-          a.id === id ? { ...a, status } : a
-        );
-      }
-      return updated;
-    });
+    setApplications((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, status } : a))
+    );
     if (selectedApp?.id === id) {
       setSelectedApp((prev) => (prev ? { ...prev, status } : null));
     }
@@ -172,6 +162,16 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
     }
     return app.resumeUrl || null;
   };
+
+  if (isLoading) {
+    return (
+      <div className="container py-8 space-y-4">
+        <Skeleton className="h-10 w-full max-w-md" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="container py-8 space-y-6">
@@ -201,63 +201,45 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
         </TabsList>
       </Tabs>
 
-      <div className="space-y-4">
-        {jobsData.jobs.map((job) => {
-          const apps = getFilteredApps(job.id);
-          const isLoading = loadingJobs[job.id];
-          const isLoaded = loadedJobs[job.id];
-          const allApps = applicationsByJob[job.id] || [];
-          const newCount = allApps.filter((a) => a.status === "new").length;
-
-          return (
-            <Collapsible
-              key={job.id}
-              defaultOpen
-              onOpenChange={(open) => {
-                if (open) fetchJobApplications(job.id);
-              }}
-            >
-              <div className="flex items-center justify-between rounded-lg border p-4">
-                <CollapsibleTrigger className="flex items-center gap-2 font-semibold">
-                  <ChevronDown className="h-4 w-4" />
-                  {job.title}
-                  {newCount > 0 && (
-                    <Badge
-                      variant="outline"
-                      className="bg-blue-100 text-blue-800 hover:bg-blue-100 ml-2"
-                    >
-                      {newCount} new
-                    </Badge>
-                  )}
-                  {isLoaded && (
+      {Object.keys(grouped).length === 0 ? (
+        <p className="text-center text-muted-foreground py-12">
+          No applications found.
+        </p>
+      ) : (
+        <div className="space-y-4">
+          {Object.entries(grouped).map(([jobId, group]) => {
+            const newCount = group.apps.filter(
+              (a) => a.status === "new"
+            ).length;
+            return (
+              <Collapsible key={jobId} defaultOpen>
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <CollapsibleTrigger className="flex items-center gap-2 font-semibold">
+                    <ChevronDown className="h-4 w-4" />
+                    {group.title}
+                    {newCount > 0 && (
+                      <Badge
+                        variant="outline"
+                        className="bg-blue-100 text-blue-800 hover:bg-blue-100 ml-2"
+                      >
+                        {newCount} new
+                      </Badge>
+                    )}
                     <span className="text-sm font-normal text-muted-foreground">
-                      ({allApps.length} total)
+                      ({group.apps.length} total)
                     </span>
-                  )}
-                </CollapsibleTrigger>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => handleExportCSV(job.id)}
-                >
-                  <Download className="mr-1 h-4 w-4" />
-                  Export CSV
-                </Button>
-              </div>
-              <CollapsibleContent>
-                <div className="rounded-b-lg border border-t-0">
-                  {isLoading ? (
-                    <div className="p-4 space-y-2">
-                      <Skeleton className="h-8 w-full" />
-                      <Skeleton className="h-8 w-full" />
-                    </div>
-                  ) : apps.length === 0 ? (
-                    <p className="text-center text-muted-foreground py-6 text-sm">
-                      {isLoaded
-                        ? "No applications found."
-                        : "Loading..."}
-                    </p>
-                  ) : (
+                  </CollapsibleTrigger>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => handleExportCSV(jobId)}
+                  >
+                    <Download className="mr-1 h-4 w-4" />
+                    Export CSV
+                  </Button>
+                </div>
+                <CollapsibleContent>
+                  <div className="rounded-b-lg border border-t-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -269,7 +251,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {apps.map((app) => {
+                        {group.apps.map((app) => {
                           const resumeUrl = getResumeDownloadUrl(app);
                           return (
                             <TableRow
@@ -344,9 +326,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                                         Cancel
                                       </AlertDialogCancel>
                                       <AlertDialogAction
-                                        onClick={() =>
-                                          handleDelete(app.id, app.jobId)
-                                        }
+                                        onClick={() => handleDelete(app.id)}
                                       >
                                         Delete
                                       </AlertDialogAction>
@@ -359,13 +339,13 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
                         })}
                       </TableBody>
                     </Table>
-                  )}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          );
-        })}
-      </div>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            );
+          })}
+        </div>
+      )}
 
       {selectedApp && (
         <ApplicationDetail
