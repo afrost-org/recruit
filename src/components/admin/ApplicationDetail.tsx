@@ -22,12 +22,16 @@ export interface ApplicationRecord {
   title: string;
   type: string;
   location: string;
-  email: string;
+  applicationEmail?: string;
   submittedAt: string;
   status: string;
   resumeUrl?: string;
-  answers: { question: string; answer: string }[];
+  resumeFileName?: string;
+  answers: { questionId?: string; question: string; answer: string }[];
 }
+
+export const getApplicantEmail = (app: ApplicationRecord) =>
+  app.answers.find((a) => a.questionId === "email")?.answer || app.applicationEmail || "—";
 
 interface ApplicationDetailProps {
   application: ApplicationRecord;
@@ -82,7 +86,7 @@ const ApplicationDetail = ({
     const text = `Position: ${application.title}
 Type: ${application.type}
 Location: ${application.location}
-Email: ${application.email}
+Email: ${getApplicantEmail(application)}
 Status: ${application.status}
 Submitted: ${new Date(application.submittedAt).toLocaleDateString()}
 
@@ -114,7 +118,7 @@ Resume: ${application.resumeUrl || "N/A"}`;
             </div>
             <div>
               <span className="font-medium text-muted-foreground">Email</span>
-              <p>{application.email}</p>
+              <p>{getApplicantEmail(application)}</p>
             </div>
             <div>
               <span className="font-medium text-muted-foreground">Submitted</span>
@@ -122,7 +126,7 @@ Resume: ${application.resumeUrl || "N/A"}`;
             </div>
             <div>
               <span className="font-medium text-muted-foreground">Status</span>
-              <Badge className={statusColors[application.status] || ""}>
+              <Badge variant="outline" className={statusColors[application.status] || ""}>
                 {application.status}
               </Badge>
             </div>
