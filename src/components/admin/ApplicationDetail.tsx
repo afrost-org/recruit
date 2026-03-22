@@ -132,7 +132,7 @@ Resume: ${resumeDownloadUrl ? window.location.origin + resumeDownloadUrl : "N/A"
         </DialogHeader>
 
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             {fields.map((f) => (
               <div key={f.label}>
                 <span className="font-medium text-muted-foreground">
