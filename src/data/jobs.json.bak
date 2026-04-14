@@ -1,0 +1,188 @@
+{
+  "jobs": [
+    {
+      "id": "senior-devops-engineer",
+      "title": "Senior Devops Engineer",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Experienced Senior DevOps Engineer to lead cloud infrastructure, CI/CD strategies, and deployment automation for AI/ML workloads in a fast-paced enterprise AI environment.",
+      "description": "We seek an experienced Senior DevOps Engineer to lead cloud infrastructure, CI/CD strategies, and deployment automation for our AI/ML workloads. You'll architect scalable systems, mentor juniors, and drive operational excellence in a collaborative, fast-paced environment focused on enterprise AI innovation.",
+      "responsibilities": [
+        "Design and optimize CI/CD pipelines using Jenkins, GitLab CI, ArgoCD, or equivalent for complex AI model deployments",
+        "Architect and manage multi-cloud infrastructure (AWS, Azure, GCP) with Kubernetes, Docker, and IaC tools like Terraform and Pulumi",
+        "Implement advanced monitoring, logging, and observability with Prometheus, Grafana, ELK stack, and chaos engineering practices",
+        "Lead security hardening, compliance audits (ISO 27001/42001), and zero-trust architectures for production AI systems",
+        "Automate workflows with Python/Bash/Go scripting and integrate with Jira, Confluence for agile DevOps practices",
+        "Mentor junior engineers, conduct code reviews, and drive on-call optimizations while scaling for high-availability AI services",
+        "Collaborate with R&D, data science, and sales teams to enable rapid AI prototyping to production"
+      ],
+      "requirements": [
+        "Bachelor's/Master's in Computer Science, IT, or equivalent with 3+ years in DevOps/SRE roles",
+        "Proven expertise in container orchestration (Kubernetes EKS/AKS/GKE), cloud-native services, and IaC",
+        "Strong experience with CI/CD, GitOps, and monitoring tools in production-scale environments",
+        "Proficiency in Linux, networking, security best practices, and scripting for automation",
+        "Familiarity with AI/ML ops (e.g., Kubeflow, MLflow, SageMaker) and agile tools like Jira",
+        "Excellent stakeholder communication skills; UK English proficiency preferred"
+      ],
+      "preferred": [
+        "Leadership in MLOps pipelines for enterprise AI deployments",
+        "Certifications: AWS/GCP Solutions Architect, CKA/CKAD, Terraform Associate",
+        "Experience with edge AI, serverless, or multi-region high-availability setups"
+      ],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com"
+    },
+    {
+      "id": "chief-product-officer-cpo",
+      "title": "Chief Product Officer (CPO)",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Chief Product Officer to define and drive the product vision across AI solutions and platforms, leading product strategy and ensuring scalable, high-impact products.",
+      "description": "We are hiring a Chief Product Officer to define and drive the product vision across our AI solutions and platforms. You will lead product strategy, identify new opportunities, and ensure we build scalable, high-impact products aligned with business goals.",
+      "responsibilities": [
+        "Own the overall product strategy and roadmap",
+        "Identify new product opportunities in AI and enterprise tech",
+        "Work closely with clients, leadership, and engineering teams",
+        "Ensure product-market fit and scalable growth",
+        "Build and lead the product team",
+        "Drive innovation across AI use cases and solutions"
+      ],
+      "requirements": [
+        "8+ years of product experience, with leadership roles",
+        "Strong understanding of AI, SaaS, and enterprise products",
+        "Proven track record of building and scaling products",
+        "Excellent strategic thinking and execution skills",
+        "Strong stakeholder and team leadership abilities"
+      ],
+      "preferred": [],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com"
+    },
+    {
+      "id": "chief-technology-officer-cto",
+      "title": "Chief Technology Officer (CTO)",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Hands-on CTO to lead the architecture, development, and scaling of AI-driven products and enterprise solutions with deep technical expertise.",
+      "description": "We are looking for a hands-on CTO to lead the architecture, development, and scaling of AI-driven products and enterprise solutions. This role requires deep technical expertise, strong execution ability, and the capability to build systems that are scalable, reliable, and production-ready.",
+      "responsibilities": [
+        "Define and drive the overall system architecture across AI platforms and SaaS products",
+        "Design scalable backend systems, microservices, and distributed architectures",
+        "Lead the development and deployment of AI/ML pipelines, LLM-based systems, and data workflows",
+        "Make decisions on tech stack, infrastructure, and engineering best practices",
+        "Oversee cloud infrastructure (AWS/GCP/Azure), CI/CD pipelines, and DevOps processes",
+        "Ensure performance, security, and scalability across all systems",
+        "Work closely with product and business teams to translate requirements into technical solutions",
+        "Review code, mentor engineers, and enforce high engineering standards",
+        "Evaluate and integrate emerging technologies in AI and automation"
+      ],
+      "requirements": [
+        "8+ years of experience in software engineering, with strong backend and system design expertise",
+        "Proven experience in building and scaling SaaS or AI-based products",
+        "Strong proficiency in system architecture, distributed systems, and API design",
+        "Experience with cloud platforms, containerization, and orchestration tools",
+        "Hands-on experience with AI/ML systems, LLM integrations, or data engineering pipelines",
+        "Strong understanding of databases (SQL/NoSQL), caching, and performance optimization",
+        "Experience in setting up CI/CD pipelines and DevOps workflows",
+        "Ability to write and review production-grade code",
+        "Strong leadership skills with experience building and managing engineering teams"
+      ],
+      "preferred": [],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com"
+    },
+    {
+      "id": "full-stack-developer-js-node",
+      "title": "Full Stack Developer (JS + Node)",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Full-stack MERN developers to build responsive, high-performance web applications powering AI-driven products with React and Node.js.",
+      "description": "We're seeking talented full-stack MERN developers to build responsive, high-performance web applications that power our AI-driven products. You'll deliver seamless user experiences by architecting scalable frontend interfaces with React and robust backend services using Node.js, MongoDB, and Express.js, while integrating AI/ML APIs for intelligent enterprise solutions.",
+      "responsibilities": [
+        "Develop responsive, production-grade frontend interfaces using React 18+, Next.js, Redux Toolkit, and Tailwind CSS/TypeScript",
+        "Build scalable RESTful/GraphQL backend APIs with Node.js, Express.js, and MongoDB (MERN stack) for AI data processing",
+        "Integrate third-party AI/ML APIs (e.g., TensorFlow.js, OpenAI) and ensure secure, real-time data flows with WebSockets/Socket.io",
+        "Optimize application performance, implement CI/CD pipelines, and ensure 99.9% uptime for mission-critical AI dashboards",
+        "Collaborate with UX designers, data scientists, and product teams using Jira/Confluence in agile sprints",
+        "Write clean, maintainable code following ISO 42001 AI standards, with comprehensive unit/integration testing (Jest, Cypress)",
+        "Deploy containerized apps to AWS/GCP with Docker and support MLOps workflows for model-driven UIs"
+      ],
+      "requirements": [
+        "3+ years hands-on experience building production MERN stack applications (MongoDB, Express.js, React, Node.js)",
+        "Expertise in modern JavaScript/TypeScript, React Hooks/Context API, and state management (Redux/Zustand)",
+        "Strong backend skills: Node.js microservices, JWT authentication, MongoDB aggregation pipelines, and Redis caching",
+        "Proven experience with REST/GraphQL APIs, performance optimization, and responsive design (mobile-first)",
+        "Familiarity with Git workflows, agile tools (Jira), and cloud deployment (Docker, Vercel, AWS Amplify)",
+        "Excellent problem-solving skills and UI/UX sensibility for enterprise AI applications",
+        "Strong communication skills; UK English proficiency preferred for global client documentation"
+      ],
+      "preferred": [],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com" 
+    },
+    {
+      "id": "python-developer-fastapi-openai",
+      "title": "Python Developer (FastAPI + OpenAI)",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Python Developers to build scalable backend systems and AI-driven applications using FastAPI and OpenAI integrations.",
+      "description": "We are hiring Python Developers to build scalable backend systems and AI-driven applications.",
+      "responsibilities": [
+        "Develop backend systems and APIs using Python",
+        "Work on AI/ML integrations and data pipelines",
+        "Optimize performance and scalability of applications",
+        "Collaborate with product and frontend teams",
+        "Write clean, maintainable, and production-ready code"
+      ],
+      "requirements": [
+        "3+ years of experience in Python development",
+        "Experience with frameworks like FastAPI / Django / Flask",
+        "Understanding of APIs, databases, and system design",
+        "Exposure to AI/ML integrations is a plus",
+        "Strong debugging and problem-solving skills"
+      ],
+      "preferred": [],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com"
+    },
+    {
+      "id": "senior-product-manager",
+      "title": "Senior Product Manager",
+      "department": "Tech",
+      "location": "Gurgaon, India",
+      "type": "Full-time",
+      "postedDate": "2026-03-17",
+      "shortDescription": "Senior Product Managers to lead development of AI-powered platforms and enterprise-grade intelligent solutions, bridging business strategy with technical execution.",
+      "description": "We're looking for Senior Product Managers to lead the development of AI-powered platforms and enterprise-grade intelligent solutions. You will work closely with clients, engineers, and leadership to translate complex business challenges into scalable AI products and data-driven systems. This role requires strong product thinking, an understanding of AI/LLM capabilities, and the ability to bridge business strategy with technical execution.",
+      "responsibilities": [
+        "Own the end-to-end product lifecycle — from problem discovery and product definition to launch and continuous improvement",
+        "Work closely with enterprise clients and internal stakeholders to identify pain points and define AI-driven product opportunities",
+        "Create Product Requirement Documents (PRDs), user journeys, and feature roadmaps aligned with business goals",
+        "Collaborate with engineering, data and design teams to build scalable and reliable AI-powered solutions",
+        "Drive product decisions using data insights, user feedback, experimentation, and market research",
+        "Ensure high-quality and timely delivery of product milestones in a fast-moving environment",
+        "Contribute to shaping AI product strategy, platform capabilities, and long-term roadmap"
+      ],
+      "requirements": [
+        "4+ years of product management experience, preferably in technology-driven organizations",
+        "Experience working on SaaS platforms, AI/ML products, or data-driven systems",
+        "Strong problem-solving ability and stakeholder management skills; ability to translate complex business needs into clear technical and product requirements",
+        "Familiarity with modern product and project management tools used for collaboration, documentation, and workflow tracking",
+        "Comfortable working in fast-paced startup environments with rapid iteration cycles"
+      ],
+      "preferred": [],
+      "salary": "Competitive (as per industry standards)",
+      "applicationEmail": "satyaakam@gmail.com"
+    }
+  ]
+}
