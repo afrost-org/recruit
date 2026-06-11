@@ -1,36 +1,38 @@
 {
   "jobs": [
     {
-      "id": "revenuebase-job-001",
-      "title": "Full Stack Developer(Backend)",
-      "department": "Engineering",
-      "location": "Remote",
+      "id": "dummy-job-001",
+      "title": "Software Engineer",
+      "department": "Technology",
+      "location": "San Francisco, CA",
       "type": "Full-time",
-      "postedDate": "2026-05-18",
-      "shortDescription": "Full Stack Developer",
-      "description": "We are seeking a skilled Full Stack Developer with a strong focus on backend development to join our dynamic team. The ideal candidate will have experience in building scalable web applications, working with databases, and integrating third-party APIs. You will be responsible for designing, developing, and maintaining our backend services while collaborating closely with frontend developers and other team members to deliver high-quality products.",
-      "responsibilities": [        "Design, build, and maintain scalable backend services using Python and FastAPI.",        "Develop and optimize high-performance RESTful APIs powering AI agents and GTM workflows.",        "Architect and maintain cloud-native infrastructure (compute, storage, networking).",        "Build reliable data pipelines and services that process, validate, and serve large B2B datasets.",        "Ensure system scalability, observability, and fault tolerance.",        "Own backend features end-to-end — from design and implementation to deployment and monitoring.",        "Collaborate closely with frontend and data engineers to ensure clean API contracts and reliable data flow.",        "Contribute to architectural decisions, code reviews, and engineering best practices.",        "Continuously improve performance, security, and maintainability across backend systems."      ],
+      "postedDate": "2026-06-10",
+      "shortDescription": "Dummy short description for a software engineer.",
+      "description": "This is a dummy job description for a Software Engineer role. We are looking for a motivated individual to join our team and work on exciting projects. This role involves developing and maintaining software applications.",
+      "responsibilities": [
+        "Write clean, scalable code using .NET Core.",
+        "Test and deploy applications and systems.",
+        "Revise, update, refactor and debug code.",
+        "Improve existing software.",
+        "Develop documentation throughout the software development life cycle (SDLC)."
+      ],
       "requirements": [
-        "4+ years of professional backend development experience.",
-        "Strong proficiency in Python.",
-        "Hands-on experience with:",
-        "FastAPI",
-        "RESTful API design and implementation",
-        "Relational databases (PostgreSQL or similar) and NoSQL Databases (DynamoDB or similar)",
-        "Asynchronous programming",
-        "Cloud platforms (AWS, GCP, or Azure)",
-        "Experience with containerization and deployment (Docker).",
-        "Solid understanding of distributed systems concepts (caching, queues, background jobs).",
-        "Comfortable designing scalable systems and optimizing for performance.",
-        "Familiar with authentication, authorization, and API security best practices.",
-        "Experience working in a a fast-moving, remote-first environment."
+        "Proven experience as a Software Developer, Software Engineer or similar role.",
+        "Familiarity with Agile development methodologies.",
+        "Experience with software design and development in a test-driven environment.",
+        "Knowledge of coding languages (e.g. C++, Java, JavaScript) and frameworks/systems (e.g. AngularJS, Git).",
+        "Experience with databases and Object-Relational Mapping (ORM) frameworks (e.g. Hibernate).",
+        "Ability to learn new languages and technologies.",
+        "Excellent communication skills.",
+        "Resourcefulness and troubleshooting aptitude.",
+        "Attention to detail."
       ],
       "preferred": [
-        "You take ownership, communicate clearly, and ship production-quality systems.",
-        "You care about performance, reliability, and long-term maintainability."
+        "BSc/BA in Computer Science, Engineering or a related field.",
+        "Experience with cloud services (e.g. AWS, Azure)."
       ],
-      "salary": "Competitive (as per industry standards)",
-      "applicationEmail": "recruit@afrost.org"
+      "salary": "Not specified",
+      "applicationEmail": "apply@example.com"
     }
   ]
 }
