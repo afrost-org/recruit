@@ -1,38 +1,42 @@
 {
   "jobs": [
     {
-      "id": "dummy-job-001",
-      "title": "Software Engineer",
-      "department": "Technology",
-      "location": "San Francisco, CA",
+      "id": "forward-deployed-engineer-001",
+      "title": "Forward Deployed Engineer",
+      "department": "Engineering",
+      "location": "Remote, India",
       "type": "Full-time",
-      "postedDate": "2026-06-10",
-      "shortDescription": "Dummy short description for a software engineer.",
-      "description": "This is a dummy job description for a Software Engineer role. We are looking for a motivated individual to join our team and work on exciting projects. This role involves developing and maintaining software applications.",
+      "postedDate": "2026-06-19",
+      "shortDescription": "Forward Deployed Engineer role for a hands-on builder who uses AI agents, ships production software quickly, and works directly with customers across changing technical problems.",
+      "description": "Join an AI-native IT services team focused on turning signed contracts into working, production-ready software quickly. The role sits inside client delivery, working closely with founders and customers to understand business outcomes, choose the right technical approach, and ship high-quality solutions across front-end, back-end, data pipelines, integrations, and AI-powered systems.",
       "responsibilities": [
-        "Write clean, scalable code using .NET Core.",
-        "Test and deploy applications and systems.",
-        "Revise, update, refactor and debug code.",
-        "Improve existing software.",
-        "Develop documentation throughout the software development life cycle (SDLC)."
+        "Build software that solves real customer problems using the technology that best fits the work.",
+        "Work hands-on across front-end, back-end, data pipelines, integrations, and AI models.",
+        "Operate with AI coding agents and assistants to write code, run tests, open pull requests, update tickets, and manage delivery context.",
+        "Make pragmatic trade-offs between elegant engineering and fast, reliable shipping.",
+        "Explore new approaches and tools that can improve delivery speed or quality.",
+        "Work directly with customers, founders, and internal teams to ship production software that meets service levels and business goals.",
+        "Help identify and hire people who can operate with strong judgment, speed, and craft."
       ],
       "requirements": [
-        "Proven experience as a Software Developer, Software Engineer or similar role.",
-        "Familiarity with Agile development methodologies.",
-        "Experience with software design and development in a test-driven environment.",
-        "Knowledge of coding languages (e.g. C++, Java, JavaScript) and frameworks/systems (e.g. AngularJS, Git).",
-        "Experience with databases and Object-Relational Mapping (ORM) frameworks (e.g. Hibernate).",
-        "Ability to learn new languages and technologies.",
-        "Excellent communication skills.",
-        "Resourcefulness and troubleshooting aptitude.",
-        "Attention to detail."
+        "2-5 years of software engineering experience.",
+        "Strong coding skills across multiple languages, with disciplined engineering craft.",
+        "Ability to pick up unfamiliar stacks and make them work in ambiguous environments.",
+        "Experience shipping full-stack features, internal tools, automations, prototypes, or production systems.",
+        "Appreciation for how businesses make money with software and why technical work matters to customers.",
+        "Comfort working in a terminal and learning Git-based collaboration quickly.",
+        "Daily hands-on use of AI coding assistants such as Claude Code, Codex, or equivalent tools.",
+        "Clear, precise written communication and the ability to reason through problems in writing.",
+        "Comfort working across engineering, delivery, and client context rather than staying narrowly specialized."
       ],
       "preferred": [
-        "BSc/BA in Computer Science, Engineering or a related field.",
-        "Experience with cloud services (e.g. AWS, Azure)."
+        "Startup, product company, consultancy, agency, QA automation, design engineering, product, business analysis, DevOps, or platform engineering background with strong hands-on building experience.",
+        "Experience working directly with clients or stakeholders across varied technical stacks.",
+        "Strong opinions about software quality, testing, usability, and maintainable code.",
+        "Interest in turning state-of-the-art AI research and tooling into reliable production systems."
       ],
       "salary": "Not specified",
-      "applicationEmail": "apply@example.com"
+      "applicationEmail": "recruit@afrost.org"
     }
   ]
 }
