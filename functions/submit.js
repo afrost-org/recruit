@@ -36,6 +36,15 @@ export async function onRequestPost(context) {
       });
     }
 
+    // Validate file extension
+    const fileExtension = resumeFile.name.split('.').pop().toLowerCase();
+    const validExtensions = ['pdf', 'doc', 'docx'];
+    if (!validExtensions.includes(fileExtension)) {
+      return new Response('Invalid file extension. Accepted formats: PDF, DOC, DOCX', {
+        status: 400,
+      });
+    }
+
     // Validate file size (5MB)
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
     if (resumeFile.size > MAX_FILE_SIZE) {
@@ -93,7 +102,6 @@ export async function onRequestPost(context) {
     const timestamp = new Date().toISOString();
 
     // Generate a unique filename for R2
-    const fileExtension = resumeFile.name.split('.').pop().toLowerCase();
     const resumeFileName = `${applicationId}-${timestamp}.${fileExtension}`;
 
     // Upload file to R2
