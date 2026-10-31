@@ -13,6 +13,17 @@ export async function onRequestGet(context) {
     // Get the filename from URL parameters - this should be the exact filename stored in R2
     const filename = url.searchParams.get('file');
 
+    // Authenticate the request
+    const password = request.headers.get('X-Admin-Password') || url.searchParams.get('token');
+    const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
+    const storedPassword = row?.value;
+
+    if (!password || !storedPassword || password !== storedPassword) {
+      return new Response('Unauthorized', {
+        status: 401,
+      });
+    }
+
     // Validate required parameter
     if (!filename) {
       return new Response('Missing filename parameter', {
@@ -33,6 +44,7 @@ export async function onRequestGet(context) {
     const headers = new Headers();
     headers.set('Content-Type', file.httpMetadata.contentType || 'application/octet-stream');
     headers.set('Content-Disposition', `attachment; filename="${filename}"`);
+    headers.set('X-Content-Type-Options', 'nosniff'); // Hardens security against content-type sniffing
     
     return new Response(file.body, {
       headers,
@@ -44,4 +56,4 @@ export async function onRequestGet(context) {
       status: 500,
     });
   }
-} 
+}

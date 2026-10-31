@@ -83,7 +83,7 @@ const ApplicationDetail = ({
   };
 
   const resumeDownloadUrl = application.resumeFileName
-    ? `/getResume?file=${application.resumeFileName}`
+    ? `/getResume?file=${application.resumeFileName}&token=${encodeURIComponent(password)}`
     : application.resumeUrl || null;
 
   const handleCopyAll = () => {

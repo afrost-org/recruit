@@ -3,9 +3,11 @@ import subprocess
 import json
 import sys
 
-ACCOUNT_ID = "499d93e9e13f6cd0a447046d098ffc11"
-KV_NS = "1c14adb59ccb4ee2bbd15a7822a54f0b"
-D1_DB = "recruit"
+import os
+
+ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "499d93e9e13f6cd0a447046d098ffc11")
+KV_NS = os.environ.get("CLOUDFLARE_KV_NAMESPACE_ID", "1c14adb59ccb4ee2bbd15a7822a54f0b")
+D1_DB = os.environ.get("CLOUDFLARE_D1_DATABASE_NAME", "recruit")
 ENV = {"CLOUDFLARE_ACCOUNT_ID": ACCOUNT_ID}
 
 def run(cmd):

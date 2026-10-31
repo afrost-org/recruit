@@ -1,9 +1,3 @@
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
-};
-
 function rowToCamelCase(row) {
   return {
     id: row.id,
@@ -30,29 +24,9 @@ function rowToCamelCase(row) {
   };
 }
 
-async function checkAuth(request, env) {
-  const password = request.headers.get('X-Admin-Password');
-  const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
-  const storedPassword = row?.value;
-  if (!password || !storedPassword || password !== storedPassword) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
-    });
-  }
-  return null;
-}
-
-export async function onRequestOptions() {
-  return new Response(null, { status: 204, headers: corsHeaders });
-}
-
 export async function onRequestGet(context) {
   try {
-    const { request, env } = context;
-
-    const authError = await checkAuth(request, env);
-    if (authError) return authError;
+    const { env } = context;
 
     const { results } = await env.DB.prepare('SELECT * FROM applications ORDER BY submitted_at DESC').all();
 
@@ -60,13 +34,13 @@ export async function onRequestGet(context) {
 
     return new Response(JSON.stringify(applications), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
     console.error('Error fetching applications:', err);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }

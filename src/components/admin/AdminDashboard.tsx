@@ -203,7 +203,9 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
         .filter((app) => app.resumeFileName)
         .map(async (app) => {
           try {
-            const res = await fetch(`/getResume?file=${app.resumeFileName}`);
+            const res = await fetch(`/getResume?file=${app.resumeFileName}`, {
+              headers: authHeaders,
+            });
             if (res.ok) {
               const blob = await res.blob();
               const name = app.fullName
@@ -261,7 +263,7 @@ const AdminDashboard = ({ password }: AdminDashboardProps) => {
 
   const getResumeDownloadUrl = (app: ApplicationRecord) => {
     if (app.resumeFileName) {
-      return `/getResume?file=${app.resumeFileName}`;
+      return `/getResume?file=${app.resumeFileName}&token=${encodeURIComponent(password)}`;
     }
     return app.resumeUrl || null;
   };

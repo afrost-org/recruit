@@ -1,9 +1,3 @@
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, PATCH, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
-};
-
 function rowToCamelCase(row) {
   return {
     id: row.id,
@@ -30,48 +24,28 @@ function rowToCamelCase(row) {
   };
 }
 
-async function checkAuth(request, env) {
-  const password = request.headers.get('X-Admin-Password');
-  const row = await env.DB.prepare("SELECT value FROM config WHERE key = 'admin_password'").first();
-  const storedPassword = row?.value;
-  if (!password || !storedPassword || password !== storedPassword) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
-    });
-  }
-  return null;
-}
-
-export async function onRequestOptions() {
-  return new Response(null, { status: 204, headers: corsHeaders });
-}
-
 export async function onRequestGet(context) {
   try {
-    const { request, env, params } = context;
+    const { env, params } = context;
     const { id } = params;
-
-    const authError = await checkAuth(request, env);
-    if (authError) return authError;
 
     const row = await env.DB.prepare('SELECT * FROM applications WHERE id = ?').bind(id).first();
     if (!row) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     return new Response(JSON.stringify(rowToCamelCase(row)), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
     console.error('Error fetching application:', err);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
@@ -81,14 +55,11 @@ export async function onRequestPatch(context) {
     const { request, env, params } = context;
     const { id } = params;
 
-    const authError = await checkAuth(request, env);
-    if (authError) return authError;
-
     const existing = await env.DB.prepare('SELECT * FROM applications WHERE id = ?').bind(id).first();
     if (!existing) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -97,7 +68,7 @@ export async function onRequestPatch(context) {
     if (!body.status) {
       return new Response(JSON.stringify({ error: 'Missing status field' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -106,30 +77,27 @@ export async function onRequestPatch(context) {
     const updated = { ...existing, status: body.status };
     return new Response(JSON.stringify(rowToCamelCase(updated)), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
     console.error('Error updating application:', err);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
 
 export async function onRequestDelete(context) {
   try {
-    const { request, env, params } = context;
+    const { env, params } = context;
     const { id } = params;
-
-    const authError = await checkAuth(request, env);
-    if (authError) return authError;
 
     const row = await env.DB.prepare('SELECT resume_file_name FROM applications WHERE id = ?').bind(id).first();
     if (!row) {
       return new Response(JSON.stringify({ error: 'Application not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -146,13 +114,13 @@ export async function onRequestDelete(context) {
 
     return new Response(JSON.stringify({ success: true, message: 'Application deleted' }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
     console.error('Error deleting application:', err);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
